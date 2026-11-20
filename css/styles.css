@@ -1,0 +1,1240 @@
+/**
+ * ============================================================================
+ * ESTILOS VISUALES GENERALES — PLATAFORMA SOATECH 2026
+ * ============================================================================
+ * Identidad Visual: Minimalista, editorial, profesional y comercial.
+ * Aprovechamiento de pantalla completa sin clichés de IA.
+ * Paleta coherente: Azul institucional, Verde proveedor/aprobado, Naranja advertencia/pendiente, Rojo crítico/rechazado.
+ */
+
+/* ----------------------------------------------------------------------------
+ * 1. Variables de Diseño (Design Tokens) - Modo Claro y Oscuro
+ * ------------------------------------------------------------------------- */
+:root {
+    /* Paleta Neutra Editorial (Modo Claro) */
+    --bg-app: #f4f6f9;
+    --bg-surface: #ffffff;
+    --bg-surface-alt: #f8fafc;
+    --bg-hover: #f1f5f9;
+    --bg-active: #e2e8f0;
+    
+    /* Tipografía y Textos */
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --text-inverted: #ffffff;
+
+    /* Bordes y Separadores */
+    --border-subtle: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-strong: #94a3b8;
+
+    /* Semántica de Colores SOATECH */
+    /* Azul: Institucional y Soporte Técnico de la Plataforma */
+    --accent-primary: #0f4c81;
+    --accent-hover: #0b3761;
+    --accent-subtle: #e8f0fe;
+    --color-blue-brand: #2563eb;
+    --color-blue-bg: #eff6ff;
+    --color-blue-border: #bfdbfe;
+
+    /* Verde: Proveedor, Operaciones Confirmadas y Ganancia Positiva */
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
+    --success-text: #065f46;
+    --success-solid: #059669;
+    --color-green-provider: #059669;
+
+    /* Naranja: Operaciones Pendientes de Revisión y Advertencias */
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+    --warning-text: #92400e;
+    --warning-solid: #d97706;
+    --color-orange-pending: #d97706;
+
+    /* Rojo: Operaciones Rechazadas y Acciones Críticas */
+    --error-bg: #fef2f2;
+    --error-border: #fecaca;
+    --error-text: #991b1b;
+    --error-solid: #dc2626;
+    --color-red-rejected: #dc2626;
+
+    /* Fila destacada en tabla */
+    --highlight-bg: #fef3c7;
+    --highlight-border: #f59e0b;
+
+    /* Sombras discretas de precisión */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+    /* Radios y Tamaños */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-full: 9999px;
+
+    /* Fuentes */
+    --font-sans: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+    /* Paleta Oscura Profesional (Slate Mate Fintech) */
+    --bg-app: #090d16;
+    --bg-surface: #111827;
+    --bg-surface-alt: #1a2234;
+    --bg-hover: #222d42;
+    --bg-active: #2b3852;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #8492a6;
+    --text-inverted: #090d16;
+
+    --border-subtle: #243048;
+    --border-medium: #374665;
+    --border-strong: #4f638a;
+
+    --accent-primary: #388bfd;
+    --accent-hover: #58a6ff;
+    --accent-subtle: #17263c;
+    --color-blue-brand: #388bfd;
+    --color-blue-bg: #142338;
+    --color-blue-border: #243d60;
+
+    --success-bg: #062a1c;
+    --success-border: #134e38;
+    --success-text: #34d399;
+    --success-solid: #10b981;
+    --color-green-provider: #10b981;
+
+    --warning-bg: #2d1e04;
+    --warning-border: #5a3c0a;
+    --warning-text: #fbbf24;
+    --warning-solid: #f59e0b;
+    --color-orange-pending: #f59e0b;
+
+    --error-bg: #2d0d12;
+    --error-border: #5a1923;
+    --error-text: #f87171;
+    --error-solid: #ef4444;
+    --color-red-rejected: #ef4444;
+
+    --highlight-bg: #3c3008;
+    --highlight-border: #d97706;
+
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
+}
+
+/* ----------------------------------------------------------------------------
+ * 2. Reset y Reglas Base
+ * ------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+/* ----------------------------------------------------------------------------
+ * 3. Estructura Principal a Pantalla Completa (Full-Page Layout)
+ * ------------------------------------------------------------------------- */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Barra de Contexto Modo Demo (Exclusiva de Demostración) */
+.demo-bar {
+    background: #0b1324;
+    color: #f8fafc;
+    padding: 8px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+    border-bottom: 1px solid #1e293b;
+    z-index: 50;
+}
+
+.demo-bar-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.demo-pill {
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.demo-label {
+    font-weight: 600;
+    color: #94a3b8;
+    font-size: 12.5px;
+}
+
+.demo-separator {
+    color: #334155;
+    user-select: none;
+    margin: 0 2px;
+}
+
+.demo-pos-select {
+    background: #172554;
+    color: #f8fafc;
+    border: 1px solid #2563eb;
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    max-width: 320px;
+    transition: all 0.15s ease;
+}
+
+.demo-pos-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(56, 139, 253, 0.4);
+}
+
+.demo-scheme-tag {
+    font-size: 11.5px;
+    color: #93c5fd;
+    background: rgba(37, 99, 235, 0.2);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+}
+
+.demo-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-demo-switch,
+.btn-demo-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-demo-switch:hover,
+.btn-demo-reset:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Barra Superior SOATECH */
+.top-header {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    box-shadow: var(--shadow-xs);
+}
+
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo-container {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, #1e40af 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 76, 129, 0.25);
+}
+
+.brand-logo {
+    width: 22px;
+    height: 22px;
+}
+
+.brand-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-title {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.brand-badge-sub {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--accent-subtle);
+    color: var(--accent-primary);
+    border: 1px solid rgba(15, 76, 129, 0.15);
+    padding: 2px 7px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.04em;
+}
+
+.brand-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-vigencia {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.badge-vigencia .indicator-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success-solid);
+    box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-icon:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+}
+
+.btn-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-reset:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+}
+
+/* ----------------------------------------------------------------------------
+ * 4. Área de Trabajo Principal (Split View 60% / 40%)
+ * ------------------------------------------------------------------------- */
+.workspace-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 28px;
+    padding: 24px 28px;
+    max-width: 1720px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+    .workspace-main {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 20px;
+    }
+}
+
+/* ----------------------------------------------------------------------------
+ * 5. Columna Izquierda: Formulario y Pasos
+ * ------------------------------------------------------------------------- */
+.panel-input {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    box-shadow: var(--shadow-xs);
+    transition: all 0.2s ease;
+}
+
+.step-card.active {
+    border-color: var(--border-medium);
+}
+
+.step-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.step-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--bg-surface-alt);
+    border: 1.5px solid var(--border-medium);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.step-card.completed .step-number {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--text-inverted);
+}
+
+.step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.step-caption {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 1px;
+}
+
+.step-status-tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-alt);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+}
+
+.step-card.completed .step-status-tag {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border-color: var(--success-border);
+}
+
+/* Selectores de Servicio (Paso 1) */
+.service-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 640px) {
+    .service-selector-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.service-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-btn:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-surface-alt);
+    transform: translateY(-1px);
+}
+
+.service-btn.selected {
+    background: var(--accent-subtle);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.service-btn-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.service-btn.selected .service-btn-title {
+    color: var(--accent-primary);
+}
+
+.service-btn-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Catálogo de Tipos de Vehículo (Paso 2) */
+.types-category-group {
+    margin-bottom: 18px;
+}
+
+.types-category-group:last-child {
+    margin-bottom: 0;
+}
+
+.category-group-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+}
+
+.type-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+}
+
+.type-card:hover:not(.disabled) {
+    border-color: var(--border-medium);
+    background: var(--bg-surface-alt);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.type-card.selected {
+    border-color: var(--accent-primary);
+    background: var(--accent-subtle);
+    box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.type-card.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: var(--bg-surface-alt);
+    border-color: var(--border-subtle);
+}
+
+.type-card-icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: all 0.15s ease;
+}
+
+.type-card.selected .type-card-icon {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+}
+
+.type-card-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.type-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.type-card.selected .type-card-name {
+    color: var(--accent-primary);
+}
+
+.type-card-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.type-card-why {
+    font-size: 11px;
+    color: var(--error-text);
+    margin-top: 2px;
+}
+
+/* Campos de Características (Paso 3) */
+.params-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.param-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.param-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.param-help {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.param-input-wrapper {
+    position: relative;
+    max-width: 320px;
+}
+
+.param-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: all 0.15s ease;
+}
+
+.param-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.14);
+}
+
+.param-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.param-option-btn {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 14px;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+}
+
+.param-option-btn:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-surface-alt);
+    transform: translateY(-1px);
+}
+
+.param-option-btn.selected {
+    border-color: var(--accent-primary);
+    background: var(--accent-subtle);
+    box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.param-option-text {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.param-option-btn.selected .param-option-text {
+    color: var(--accent-primary);
+}
+
+.param-option-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.field-error-msg {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--error-text);
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+}
+
+.state-message-box {
+    padding: 20px;
+    border-radius: var(--radius-md);
+    background: var(--bg-surface-alt);
+    border: 1.5px dashed var(--border-medium);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13.5px;
+}
+
+/* ----------------------------------------------------------------------------
+ * 6. Columna Derecha: Panel de Liquidación y Resultados
+ * ------------------------------------------------------------------------- */
+.panel-summary {
+    position: relative;
+}
+
+.summary-sticky-card {
+    position: sticky;
+    top: 80px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.summary-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-surface-alt);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.summary-header-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.summary-header-icon {
+    font-size: 20px;
+}
+
+.summary-header-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+}
+
+.summary-header-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.summary-header-pos {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    background: var(--accent-subtle);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(15, 76, 129, 0.2);
+    max-width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.summary-body {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Estado Vacío de Resumen */
+.summary-empty-state {
+    padding: 44px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.empty-state-icon {
+    width: 44px;
+    height: 44px;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.empty-state-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.empty-state-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    max-width: 300px;
+    line-height: 1.4;
+}
+
+/* Bloque Principal: Total a Cobrar al Cliente */
+.quote-highlight-card {
+    background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-alt) 100%);
+    border: 2px solid var(--accent-primary);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.08);
+}
+
+.quote-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.quote-label {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.quote-value-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.quote-amount {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+/* Bloque Secundario: Monto a Consignar al Proveedor */
+.quote-secondary-card {
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.quote-secondary-card.consignar-highlight {
+    border-left: 4px solid var(--color-green-provider);
+    background: linear-gradient(90deg, rgba(5, 150, 105, 0.05) 0%, var(--bg-surface-alt) 100%);
+}
+
+.badge-oficial-prov {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--success-text);
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    padding: 1px 7px;
+    border-radius: var(--radius-sm);
+    margin-left: 6px;
+    letter-spacing: 0.03em;
+}
+
+.quote-secondary-amount {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-top: 2px;
+}
+
+/* Botón de Copiado */
+.btn-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-medium);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn-copy:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+}
+
+.btn-copy.copied {
+    background: var(--success-bg);
+    border-color: var(--success-border);
+    color: var(--success-text);
+}
+
+/* Indicador de Ganancia / Comisión POS */
+.gain-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    border-radius: var(--radius-md);
+    color: var(--success-text);
+}
+
+.gain-label {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.gain-amount {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--success-text);
+}
+
+.quote-pos-notice {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-surface-alt);
+    border: 1px dashed var(--border-subtle);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Botón para Registrar Operación con Comprobante */
+.btn-register-sale-demo {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent-primary) 0%, #1e40af 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.25);
+}
+
+.btn-register-sale-demo:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 76, 129, 0.35);
+}
+
+.btn-register-sale-demo:active {
+    transform: scale(0.99);
+}
+
+/* Ficha Técnica / Desglose del Cálculo */
+.breakdown-list {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 12.5px;
+}
+
+.breakdown-term {
+    color: var(--text-muted);
+}
+
+.breakdown-val {
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: right;
+    max-width: 60%;
+}
+
+.code-pill {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+/* ----------------------------------------------------------------------------
+ * 7. Tabla Maestra de Tarifas 2026 (Completa)
+ * ------------------------------------------------------------------------- */
+.master-table-section {
+    padding: 0 28px 48px;
+    max-width: 1720px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+    .master-table-section {
+        padding: 0 16px 36px;
+    }
+}
+
+.table-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--bg-surface-alt);
+}
+
+.table-header-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.table-search-input {
+    width: 280px;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 13.5px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: all 0.15s ease;
+}
+
+.table-search-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.15);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    max-height: 440px;
+}
+
+.tariffs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    text-align: left;
+}
+
+.tariffs-table th {
+    position: sticky;
+    top: 0;
+    background: var(--bg-surface-alt);
+    color: var(--text-secondary);
+    font-weight: 700;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.tariffs-table td {
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.tariffs-table tr:hover td {
+    background: var(--bg-hover);
+}
+
+.tariffs-table tr.highlighted td {
+    background: var(--highlight-bg) !important;
+    font-weight: 600;
+}
+
+.tariffs-table td.col-amount {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.table-footer-notes {
+    padding: 14px 22px;
+    background: var(--bg-surface-alt);
+    border-top: 1px solid var(--border-subtle);
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ----------------------------------------------------------------------------
+ * 8. Accesibilidad y Animación Reducida
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

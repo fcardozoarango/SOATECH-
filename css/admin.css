@@ -1,0 +1,785 @@
+/**
+ * ============================================================================
+ * ESTILOS DEL PANEL DE ADMINISTRACIÓN / PROVEEDOR — SOATECH
+ * ============================================================================
+ * Diseñado para la supervisión y control ágil de los 20 puntos de venta:
+ * - Auditoría de comprobantes bancarios y aprobación/rechazo de pagos.
+ * - Monitoreo de operaciones en tiempo real con semántica de color.
+ * - Configuración de comisiones y cuentas bancarias del proveedor.
+ */
+
+/* ----------------------------------------------------------------------------
+ * 1. Navegación Principal y Pestañas de Rol
+ * ------------------------------------------------------------------------- */
+.main-nav-tabs {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .main-nav-tabs {
+        padding: 0 14px;
+    }
+}
+
+.nav-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+}
+
+.nav-tab-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-alt);
+}
+
+.nav-tab-btn.active {
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+    background: transparent;
+    font-weight: 700;
+}
+
+.nav-tab-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: var(--radius-full);
+    background: var(--bg-surface-alt);
+    color: var(--text-secondary);
+}
+
+.nav-tab-badge.badge-pending-count {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+    border: 1px solid var(--warning-border);
+}
+
+.nav-tab-btn.active .nav-tab-badge {
+    background: var(--accent-subtle);
+    color: var(--accent-primary);
+}
+
+/* ----------------------------------------------------------------------------
+ * 2. Vistas del Panel Administrador
+ * ------------------------------------------------------------------------- */
+.admin-view-container {
+    max-width: 1720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+@media (max-width: 768px) {
+    .admin-view-container {
+        padding: 16px;
+        gap: 16px;
+    }
+}
+
+/* Tarjetas KPI de Métricas */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.kpi-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.kpi-card-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.kpi-card-value {
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.kpi-card-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ----------------------------------------------------------------------------
+ * 3. Tutorial Minimizable de Administración de Puntos
+ * ------------------------------------------------------------------------- */
+.tutorial-banner-card {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+    border: 1.5px solid #bfdbfe;
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow-xs);
+    transition: all 0.25s ease;
+}
+
+[data-theme="dark"] .tutorial-banner-card {
+    background: linear-gradient(135deg, #132438 0%, #112d22 100%);
+    border-color: #1e3a5f;
+}
+
+.tutorial-banner-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.tutorial-icon-col {
+    flex-shrink: 0;
+}
+
+.tutorial-badge-icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.tutorial-banner-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.tutorial-banner-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.btn-minimize-tutorial {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-minimize-tutorial:hover {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+}
+
+.tutorial-help-pill-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tutorial-help-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-primary);
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+    transition: all 0.15s ease;
+}
+
+.tutorial-help-pill:hover {
+    background: var(--accent-subtle);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------------------------------
+ * 4. Tablas y Búsqueda del Administrador
+ * ------------------------------------------------------------------------- */
+.admin-table-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+    overflow: hidden;
+}
+
+.admin-card-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: var(--bg-surface-alt);
+}
+
+.admin-card-title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.admin-search-box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-input-search {
+    width: 260px;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 13.5px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+}
+
+.admin-input-search:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.15);
+}
+
+/* Badges de Estado Semánticos */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* Activo / Inactivo */
+.status-badge.activo {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
+}
+
+.status-badge.inactivo {
+    background: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
+}
+
+/* Estados de Auditoría de Operaciones: Pendiente, Confirmada, Rechazada */
+.status-badge.pendiente {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+    border: 1px solid var(--warning-border);
+}
+
+.status-badge.confirmada {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
+}
+
+.status-badge.rechazada {
+    background: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
+}
+
+/* Botones de Acción en Tablas */
+.btn-action-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-medium);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn-action-sm:hover {
+    background: var(--bg-surface-alt);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+}
+
+.btn-toggle-status {
+    border-color: var(--border-medium);
+}
+
+.btn-detail-row {
+    background: var(--accent-subtle);
+    color: var(--accent-primary);
+    border-color: rgba(15, 76, 129, 0.25);
+    font-weight: 700;
+}
+
+.btn-detail-row:hover {
+    background: var(--accent-primary);
+    color: #ffffff;
+}
+
+/* Filas interactivas en tabla de operaciones */
+.clickable-row {
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.clickable-row:hover td {
+    background: var(--bg-hover) !important;
+}
+
+/* ----------------------------------------------------------------------------
+ * 5. Cuentas del Proveedor (Edición Admin con Marcas Bancarias)
+ * ------------------------------------------------------------------------- */
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    padding: 22px;
+}
+
+.account-edit-card {
+    background: var(--bg-surface-alt);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Acentos de marca en tarjetas de edición */
+.account-edit-card[data-bank-id="bancolombia"] {
+    border-top: 4px solid #fd0;
+}
+
+.account-edit-card[data-bank-id="nequi"] {
+    border-top: 4px solid #bf1e62;
+}
+
+.account-edit-card[data-bank-id="davivienda"] {
+    border-top: 4px solid #ed1c24;
+}
+
+.account-edit-card[data-bank-id="daviplata"] {
+    border-top: 4px solid #eb1b23;
+}
+
+.account-card-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.form-input {
+    height: 38px;
+    padding: 0 12px;
+    font-size: 13.5px;
+    font-weight: 500;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.15);
+}
+
+.btn-primary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 13.5px;
+    font-weight: 700;
+    background: var(--accent-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-primary-action:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------------------------------
+ * 6. Modales (Autenticación, Detalle de Operación, Editor)
+ * ------------------------------------------------------------------------- */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-content-wide {
+    max-width: 820px;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(12px) scale(0.98);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-surface-alt);
+}
+
+.modal-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.modal-close-btn {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s ease;
+}
+
+.modal-close-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+.modal-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-surface-alt);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ----------------------------------------------------------------------------
+ * 7. Estilos Específicos del Modal Detalle de Operación (Héctor)
+ * ------------------------------------------------------------------------- */
+.operation-detail-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 760px) {
+    .operation-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.operation-info-card {
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.op-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border-subtle);
+}
+
+.op-detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.op-detail-label {
+    color: var(--text-muted);
+}
+
+.op-detail-val {
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+/* Visualizador de Comprobante Bancario */
+.receipt-preview-container {
+    background: var(--bg-surface-alt);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.receipt-ticket {
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    font-family: var(--font-mono);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .receipt-ticket {
+    background: #1e293b;
+    color: #f8fafc;
+    border-color: #334155;
+}
+
+.receipt-ticket::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #fd0, #bf1e62, #ed1c24);
+}
+
+.receipt-header-ticket {
+    text-align: center;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.receipt-bank-name {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.receipt-status-seal {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+}
+
+/* Línea de Tiempo de Auditoría */
+.audit-timeline {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 10px;
+    font-size: 12.5px;
+}
+
+.timeline-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.timeline-content {
+    flex: 1;
+}
+
+.timeline-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.timeline-nota {
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Acciones en Modal de Detalle (Héctor) */
+.btn-approve-op {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--success-solid);
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-approve-op:hover {
+    background: #047857;
+    transform: translateY(-1px);
+}
+
+.btn-reject-op {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--error-bg);
+    color: var(--error-text);
+    border: 1.5px solid var(--error-border);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-reject-op:hover {
+    background: var(--error-solid);
+    color: #ffffff;
+    border-color: var(--error-solid);
+}

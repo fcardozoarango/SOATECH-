@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Calculadora Comercial SOAT 2026</title>
+
+  <!-- Tipografía Profesional y Legible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Hoja de Estilos Principal (Diseño Minimalista y Pantalla Completa) -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- ============================================================== -->
+    <!-- 1. ENCABEZADO SUPERIOR MINIMALISTA                            -->
+    <!-- ============================================================== -->
+    <header class="top-header">
+      <div class="brand-wrapper">
+        <svg class="brand-logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+        <div>
+          <h1 class="brand-title">Calculadora de SOAT</h1>
+          <p class="brand-meta">Tarifario comercial vigente desde el 1 de enero de 2026</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="badge-vigencia" title="Tarifa oficial calculada para el año 2026">
+          <span class="indicator-dot"></span>
+          <span>Vigencia 2026</span>
+        </div>
+
+        <button type="button" class="btn-icon" id="btnThemeToggle" title="Cambiar tema claro/oscuro"
+          aria-label="Cambiar tema">
+          <!-- Icono inyectado por app.js -->
+        </button>
+
+        <button type="button" class="btn-reset" id="btnReset" title="Restablecer todos los campos">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+          <span>Limpiar</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Banner de alerta de vigencia si el año del sistema no coincide -->
+    <div id="avisoVigencia" class="field-error-msg" style="display:none; margin: 16px 28px 0;"></div>
+
+    <!-- ============================================================== -->
+    <!-- 2. ÁREA DE TRABAJO A PANTALLA COMPLETA (SPLIT WORKSPACE)      -->
+    <!-- ============================================================== -->
+    <main class="workspace-main">
+
+      <!-- Columna Izquierda: Configuración de Datos en 3 Pasos -->
+      <section class="panel-input" aria-label="Datos del vehículo">
+
+        <!-- PASO 1: Servicio Oficial de Tránsito -->
+        <div class="step-card" id="stepCard1">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">1</span>
+              <div>
+                <h2 class="step-title">Servicio del vehículo</h2>
+                <p class="step-caption">Casilla “Servicio” en la licencia de tránsito (tarjeta de propiedad).</p>
+              </div>
+            </div>
+            <span class="step-status-tag" id="stepTag1">Pendiente</span>
+          </div>
+
+          <div class="service-selector-grid" id="servicesGrid">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+        </div>
+
+        <!-- PASO 2: Catálogo de Tipos de Vehículo -->
+        <div class="step-card" id="stepCard2">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">2</span>
+              <div>
+                <h2 class="step-title">Tipo de vehículo</h2>
+                <p class="step-caption">Selecciona el tipo registrado en la tarjeta de propiedad.</p>
+              </div>
+            </div>
+            <span class="step-status-tag" id="stepTag2">Pendiente</span>
+          </div>
+
+          <div id="typesCatalog">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+        </div>
+
+        <!-- PASO 3: Parámetros y Características Técnicas -->
+        <div class="step-card" id="stepCard3">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">3</span>
+              <div>
+                <h2 class="step-title">Características requeridas</h2>
+                <p class="step-caption">Datos específicos según el tipo de vehículo seleccionado.</p>
+              </div>
+            </div>
+            <span class="step-status-tag" id="stepTag3">Pendiente</span>
+          </div>
+
+          <div class="params-container" id="paramsContainer">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Columna Derecha: Panel de Liquidación y Resultados Inmediatos -->
+      <aside class="panel-summary" aria-label="Liquidación y resultados">
+        <div class="summary-sticky-card">
+          <div class="summary-header">
+            <span class="summary-header-title">Liquidación Comercial</span>
+            <span style="font-size:12px;color:var(--text-muted);">Punto de Venta</span>
+          </div>
+
+          <div class="summary-body" id="summaryContainer" aria-live="polite">
+            <!-- Inyectado dinámicamente por app.js (Cotización o Estado Vacío) -->
+          </div>
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- 3. TABLA MAESTRA DE TARIFAS VIGENTES 2026                      -->
+    <!-- ============================================================== -->
+    <section class="master-table-section" aria-label="Tarifario oficial completo">
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <h2 class="table-header-title">Tabla Maestra de Tarifas SOAT 2026</h2>
+            <p style="font-size:12.5px;color:var(--text-muted);margin-top:2px;">
+              Consulta y verificación de los 37 códigos del tarifario oficial con los márgenes de venta.
+            </p>
+          </div>
+
+          <div>
+            <input type="text" id="tableSearch" class="table-search-input" placeholder="Buscar código o descripción..."
+              aria-label="Buscar en tarifario">
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="tariffs-table">
+            <thead>
+              <tr>
+                <th style="width: 80px;">Código</th>
+                <th>Descripción Oficial</th>
+                <th style="text-align: right;">A Consignar</th>
+                <th style="text-align: right;">A Cobrar</th>
+                <th style="text-align: right;">Tu Ganancia</th>
+              </tr>
+            </thead>
+            <tbody id="tariffsTableBody">
+              <!-- Inyectado dinámicamente por app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer-notes">
+          <strong>Reglas de liquidación comercial:</strong>
+          El valor a consignar corresponde al precio oficial para punto de venta del tarifario 2026. Al cliente se le
+          cobra dicho valor más $25.000 si el SOAT cuesta menos de $1.000.000, o más $30.000 si cuesta $1.000.000 o más,
+          redondeando el resultado al alza a múltiplos de $1.000. Las motos de hasta 200 c.c. tienen tarifa plana de
+          cobro de $390.000. La antigüedad se calcula restando el año modelo al año actual; con 10 o más años aplica la
+          tarifa correspondiente.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 4. SCRIPTS MODULARES (COMPATIBLES CON DOBLE CLIC Y SERVIDOR)  -->
+  <!-- ============================================================== -->
+  <!-- Tablas maestras, códigos y descripciones legales -->
+  <script src="js/tarifas.js"></script>
+
+  <!-- Fórmulas de cálculo, validaciones y motor de liquidación -->
+  <script src="js/calculadora.js"></script>
+
+  <!-- Controlador de la interfaz gráfica y eventos del usuario -->
+  <script src="js/app.js"></script>
+</body>
+
+</html>
