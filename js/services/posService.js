@@ -4,7 +4,7 @@
  * ============================================================================
  * Gestiona el catálogo de los 20–25 puntos de venta, sus estados (activo/inactivo)
  * y el cálculo de comisiones dinámicas por rangos para cada establecimiento.
- * 
+ *
  * Reglas de negocio:
  * 1. Las tarifas oficiales del SOAT son inmutables y nunca se alteran.
  * 2. Cada punto de venta posee su propia configuración de comisiones.
@@ -29,8 +29,8 @@
      * - No permite valores negativos.
      * - No permite que 'desde' sea mayor o igual que 'hasta'.
      * - No permite rangos superpuestos.
-     * 
-     * @param {Array} rangos 
+     *
+     * @param {Array} rangos
      * @returns {{ valido: boolean, error: string|null }}
      */
     function validarRangosComision(rangos) {
@@ -49,7 +49,10 @@
             }
 
             if (r.desde == null || isNaN(r.desde) || Number(r.desde) < 0) {
-                return { valido: false, error: `El valor inicial 'desde' del rango ${i + 1} debe ser mayor o igual a 0.` };
+                return {
+                    valido: false,
+                    error: `El valor inicial 'desde' del rango ${i + 1} debe ser mayor o igual a 0.`
+                };
             }
 
             if (r.hasta !== null && (isNaN(r.hasta) || Number(r.hasta) <= Number(r.desde))) {
@@ -60,7 +63,10 @@
             if (i > 0) {
                 const anterior = ordenados[i - 1];
                 if (anterior.hasta === null) {
-                    return { valido: false, error: `El rango anterior cubre hasta el infinito; no puede haber rangos posteriores superpuestos.` };
+                    return {
+                        valido: false,
+                        error: `El rango anterior cubre hasta el infinito; no puede haber rangos posteriores superpuestos.`
+                    };
                 }
                 if (Number(r.desde) <= Number(anterior.hasta)) {
                     return { valido: false, error: `Superposición detectada entre el rango ${i} y el rango ${i + 1}.` };
@@ -83,7 +89,7 @@
      */
     async function getPuntoVentaPorId(posId) {
         const puntos = storage.obtener('puntosDeVenta') || [];
-        return puntos.find(p => p.id === posId) || null;
+        return puntos.find((p) => p.id === posId) || null;
     }
 
     /**
@@ -91,7 +97,7 @@
      */
     async function toggleEstadoPuntoVenta(posId) {
         const puntos = storage.obtener('puntosDeVenta') || [];
-        const pos = puntos.find(p => p.id === posId);
+        const pos = puntos.find((p) => p.id === posId);
         if (!pos) throw new Error(`Punto de venta ${posId} no encontrado.`);
 
         pos.estado = pos.estado === 'activo' ? 'inactivo' : 'activo';
@@ -109,7 +115,7 @@
         }
 
         const puntos = storage.obtener('puntosDeVenta') || [];
-        const pos = puntos.find(p => p.id === posId);
+        const pos = puntos.find((p) => p.id === posId);
         if (!pos) throw new Error(`Punto de venta ${posId} no encontrado.`);
 
         pos.comisiones = nuevosRangos;
@@ -120,7 +126,7 @@
     /**
      * Calcula la comisión que le corresponde a un punto de venta según el valor oficial a consignar.
      * Retorna { comision, esPrecioFijoMoto, precioFijoCobro, reglaAplicada, posNombre }.
-     * 
+     *
      * @param {string|object} posIdOData ID o datos del punto de venta
      * @param {number} valorSoatBase Tarifa oficial legal a consignar
      * @param {number} codigoTarifa Código de la tarifa (ej: 110, 120, 521)
@@ -134,12 +140,13 @@
         }
 
         // Esquema por defecto si no se especifica punto de venta
-        const rangos = (pos && Array.isArray(pos.comisiones) && pos.comisiones.length > 0)
-            ? pos.comisiones
-            : [
-                { desde: 0, hasta: 999999, comision: 25000, etiqueta: 'Estándar (< $1.000.000)' },
-                { desde: 1000000, hasta: null, comision: 30000, etiqueta: 'Estándar (≥ $1.000.000)' }
-            ];
+        const rangos =
+            pos && Array.isArray(pos.comisiones) && pos.comisiones.length > 0
+                ? pos.comisiones
+                : [
+                      { desde: 0, hasta: 999999, comision: 25000, etiqueta: 'Estándar (< $1.000.000)' },
+                      { desde: 1000000, hasta: null, comision: 30000, etiqueta: 'Estándar (≥ $1.000.000)' }
+                  ];
 
         const precioFijoCobro = pos?.motosFijoCobro || 390000;
 
@@ -156,7 +163,7 @@
         }
 
         // Búsqueda del rango correspondiente según el valor oficial base
-        let reglaEncontrada = rangos.find(r => {
+        let reglaEncontrada = rangos.find((r) => {
             const cumpleMinimo = r.desde == null || valorSoatBase >= r.desde;
             const cumpleMaximo = r.hasta == null || valorSoatBase <= r.hasta;
             return cumpleMinimo && cumpleMaximo;
@@ -168,7 +175,9 @@
         }
 
         const comisionMonto = reglaEncontrada ? Number(reglaEncontrada.comision) : 25000;
-        const etiquetaRegla = reglaEncontrada?.etiqueta || `Rango $${reglaEncontrada?.desde?.toLocaleString('es-CO') || 0} - ${reglaEncontrada?.hasta ? '$' + reglaEncontrada.hasta.toLocaleString('es-CO') : 'en adelante'}`;
+        const etiquetaRegla =
+            reglaEncontrada?.etiqueta ||
+            `Rango $${reglaEncontrada?.desde?.toLocaleString('es-CO') || 0} - ${reglaEncontrada?.hasta ? '$' + reglaEncontrada.hasta.toLocaleString('es-CO') : 'en adelante'}`;
 
         return {
             comision: comisionMonto,

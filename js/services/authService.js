@@ -4,7 +4,7 @@
  * ============================================================================
  * Controla la sesión activa y el cambio ágil de perfiles durante la presentación
  * (Administrador vs. Puntos de Venta).
- * 
+ *
  * En la Etapa 2 este servicio se conectará al endpoint real de autenticación
  * (/api/auth/login) mediante JWT y cookies HttpOnly.
  */
@@ -35,8 +35,8 @@
     async function getSesionActual() {
         const usuarios = storage.obtener('usuarios') || [];
         const sesionActivaId = storage.obtener('sesionActivaId');
-        
-        let usuario = usuarios.find(u => u.id === sesionActivaId);
+
+        let usuario = usuarios.find((u) => u.id === sesionActivaId);
         if (!usuario && usuarios.length > 0) {
             usuario = usuarios[0]; // Fallback al primer usuario
             storage.guardar('sesionActivaId', usuario.id);
@@ -44,7 +44,7 @@
 
         if (usuario && usuario.rol === 'pos' && usuario.posId) {
             const puntos = storage.obtener('puntosDeVenta') || [];
-            usuario.posData = puntos.find(p => p.id === usuario.posId) || null;
+            usuario.posData = puntos.find((p) => p.id === usuario.posId) || null;
         }
 
         return usuario;
@@ -55,7 +55,7 @@
      */
     async function cambiarPerfilDemo(usuarioId) {
         const usuarios = storage.obtener('usuarios') || [];
-        const usuario = usuarios.find(u => u.id === usuarioId);
+        const usuario = usuarios.find((u) => u.id === usuarioId);
         if (!usuario) {
             throw new Error(`Usuario demo no encontrado: ${usuarioId}`);
         }
@@ -69,7 +69,7 @@
     async function loginDemo(username, password) {
         const usuarios = storage.obtener('usuarios') || [];
         // En modo demo aceptamos cualquier contraseña no vacía o validamos por username
-        const usuario = usuarios.find(u => u.username.toLowerCase() === username.toLowerCase().trim());
+        const usuario = usuarios.find((u) => u.username.toLowerCase() === username.toLowerCase().trim());
         if (!usuario) {
             return {
                 exito: false,

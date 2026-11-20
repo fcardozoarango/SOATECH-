@@ -34,7 +34,9 @@
     box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
-    transition: transform 0.15s ease, border-color 0.15s ease;
+    transition:
+        transform 0.15s ease,
+        border-color 0.15s ease;
 }
 
 .bank-card:hover {
@@ -102,411 +104,420 @@
     color: var(--text-primary);
 }
 
-    /* ============================================================================
+/* ============================================================================
  * 2. CANALES DE SOPORTE — GRID DOS COLUMNAS (Vista I)
  * ========================================================================= */
 
-    /**
+/**
  * Contenedor principal: dos columnas en escritorio, apiladas en móvil.
  * Cada canal tiene su propia card con color semántico.
  */
+.support-channels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 16px;
+}
+
+@media (max-width: 680px) {
     .support-channels-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-top: 16px;
+        grid-template-columns: 1fr;
     }
+}
 
-    @media (max-width: 680px) {
-        .support-channels-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+/* --- Tarjeta base de canal de soporte --- */
+.support-channel-card {
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: var(--shadow-md);
+}
 
-    /* --- Tarjeta base de canal de soporte --- */
-    .support-channel-card {
-        border-radius: var(--radius-lg);
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        box-shadow: var(--shadow-md);
-    }
+/* Canal azul: Soporte Técnico SOATECH */
+.support-channel-card.channel-platform {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    color: #ffffff;
+    border: 1.5px solid rgba(29, 78, 216, 0.4);
+}
 
-    /* Canal azul: Soporte Técnico SOATECH */
-    .support-channel-card.channel-platform {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
-        color: #ffffff;
-        border: 1.5px solid rgba(29, 78, 216, 0.4);
-    }
+/* Canal verde: Soporte del Proveedor (Héctor Vargas) */
+.support-channel-card.channel-provider {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    color: #ffffff;
+    border: 1.5px solid rgba(6, 95, 70, 0.4);
+}
 
-    /* Canal verde: Soporte del Proveedor (Héctor Vargas) */
-    .support-channel-card.channel-provider {
-        background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-        color: #ffffff;
-        border: 1.5px solid rgba(6, 95, 70, 0.4);
-    }
+/* --- Badges de identificación de canal --- */
+.channel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: var(--radius-sm);
+    width: fit-content;
+}
 
-    /* --- Badges de identificación de canal --- */
-    .channel-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 10.5px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        padding: 3px 9px;
-        border-radius: var(--radius-sm);
-        width: fit-content;
-    }
+/* Badge azul (plataforma) */
+.platform-badge {
+    background: rgba(255, 255, 255, 0.18);
+    color: #bfdbfe;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
 
-    /* Badge azul (plataforma) */
-    .platform-badge {
-        background: rgba(255, 255, 255, 0.18);
-        color: #bfdbfe;
-        border: 1px solid rgba(255, 255, 255, 0.25);
-    }
+/* Badge verde (proveedor) */
+.provider-badge {
+    background: rgba(255, 255, 255, 0.18);
+    color: #d1fae5;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
 
-    /* Badge verde (proveedor) */
-    .provider-badge {
-        background: rgba(255, 255, 255, 0.18);
-        color: #d1fae5;
-        border: 1px solid rgba(255, 255, 255, 0.25);
-    }
+/* --- Contenido del canal --- */
+.channel-title {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.25;
+}
 
-    /* --- Contenido del canal --- */
-    .channel-title {
-        font-size: 18px;
-        font-weight: 800;
-        line-height: 1.25;
-    }
+.channel-desc {
+    font-size: 13px;
+    opacity: 0.88;
+    line-height: 1.5;
+}
 
-    .channel-desc {
-        font-size: 13px;
-        opacity: 0.88;
-        line-height: 1.5;
-    }
+/* Filas de información (número, horario, etc.) */
+.channel-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-    /* Filas de información (número, horario, etc.) */
-    .channel-info-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 8px;
-        font-size: 13px;
-        padding: 6px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    }
+.channel-info-item:last-of-type {
+    border-bottom: none;
+}
 
-    .channel-info-item:last-of-type {
-        border-bottom: none;
-    }
+.info-label {
+    opacity: 0.72;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
 
-    .info-label {
-        opacity: 0.72;
-        font-size: 11.5px;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-        white-space: nowrap;
-    }
+.info-val {
+    font-weight: 700;
+    text-align: right;
+    font-size: 13.5px;
+}
 
-    .info-val {
-        font-weight: 700;
-        text-align: right;
-        font-size: 13.5px;
-    }
+/* --- Botones de acción en canal --- */
+.btn-channel-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 11px 20px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+    width: 100%;
+    margin-top: auto;
+}
 
-    /* --- Botones de acción en canal --- */
-    .btn-channel-action {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        font-size: 14px;
-        font-weight: 800;
-        padding: 11px 20px;
-        border-radius: var(--radius-md);
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        transition: transform 0.15s ease, filter 0.15s ease;
-        width: 100%;
-        margin-top: auto;
-    }
+.btn-channel-action:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
 
-    .btn-channel-action:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.08);
-    }
+/* Botón azul — Soporte Técnico SOATECH */
+.btn-blue-action {
+    background: #25d366;
+    /* Verde WhatsApp sobre fondo azul */
+    color: #064e3b;
+}
 
-    /* Botón azul — Soporte Técnico SOATECH */
-    .btn-blue-action {
-        background: #25d366;
-        /* Verde WhatsApp sobre fondo azul */
-        color: #064e3b;
-    }
+/* Botón verde — Proveedor Héctor */
+.btn-green-action {
+    background: #25d366;
+    color: #064e3b;
+}
 
-    /* Botón verde — Proveedor Héctor */
-    .btn-green-action {
-        background: #25d366;
-        color: #064e3b;
-    }
-
-    /* ============================================================================
+/* ============================================================================
  * 3. BANNER DE SOPORTE DEL PROVEEDOR EN CONSIGNACIÓN (Vista F)
  * ========================================================================= */
 
-    /**
+/**
  * Tarjeta destacada que aparece al pie de las cuentas bancarias en la Vista F.
  * Identifica al proveedor Héctor Vargas con color verde.
  * NUNCA debe confundirse con el soporte técnico de la plataforma (azul).
  */
-    .support-provider-card {
-        background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-        color: #ffffff;
-        border-radius: var(--radius-lg);
-        padding: 22px 24px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        box-shadow: var(--shadow-md);
-        margin-top: 20px;
-        border: 1.5px solid rgba(6, 95, 70, 0.3);
-    }
+.support-provider-card {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    color: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
+    margin-top: 20px;
+    border: 1.5px solid rgba(6, 95, 70, 0.3);
+}
 
+.support-provider-info {
+    flex: 1;
+    min-width: 220px;
+}
 
-        .support-provider-info {
-            flex: 1;
-            min-width: 220px;
-        }
+.support-provider-title {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
 
-            .support-provider-title {
-                font-size: 17px;
-                font-weight: 800;
-                margin-bottom: 4px;
-            }
+.support-provider-desc {
+    font-size: 13px;
+    color: #d1fae5;
+    line-height: 1.4;
+}
 
-                .support-provider-desc {
-                    font-size: 13px;
-                    color: #d1fae5;
-                    line-height: 1.4;
-                }
+.support-provider-phone {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a7f3d0;
+    margin-top: 6px;
+}
 
-                    .support-provider-phone {
-                        font-size: 15px;
-                        font-weight: 700;
-                        color: #a7f3d0;
-                        margin-top: 6px;
-                    }
+/* Botón de WhatsApp del proveedor (verde oscuro sobre verde claro) */
+.btn-whatsapp-provider {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25d366;
+    color: #064e3b;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 11px 22px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+    white-space: nowrap;
+}
 
-                    /* Botón de WhatsApp del proveedor (verde oscuro sobre verde claro) */
-                    .btn-whatsapp-provider {
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 8px;
-                        background: #25d366;
-                        color: #064e3b;
-                        font-size: 14px;
-                        font-weight: 800;
-                        padding: 11px 22px;
-                        border-radius: var(--radius-md);
-                        text-decoration: none;
-                        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
-                        transition: transform 0.15s ease, filter 0.15s ease;
-                        white-space: nowrap;
-                    }
+.btn-whatsapp-provider:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
 
-                        .btn-whatsapp-provider:hover {
-                            transform: translateY(-2px);
-                            filter: brightness(1.05);
-                        }
-
-                        /* ============================================================================
+/* ============================================================================
  * 4. BOTÓN FLOTANTE DE WHATSAPP — SOPORTE TÉCNICO SOATECH (Azul)
  * ========================================================================= */
 
-                        /**
+/**
  * Botón fijo en la esquina inferior derecha.
  * Corresponde EXCLUSIVAMENTE al Soporte Técnico SOATECH (+57 324 442 5912).
  * Color: azul institucional (no verde como la versión anterior).
  */
-                        .floating-whatsapp-btn {
-                            position: fixed;
-                            bottom: 24px;
-                            right: 24px;
-                            background: var(--color-blue-brand, #1d4ed8);
-                            color: #ffffff;
-                            width: 54px;
-                            height: 54px;
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            box-shadow: 0 6px 18px rgba(29, 78, 216, 0.45);
-                            z-index: 90;
-                            cursor: pointer;
-                            text-decoration: none;
-                            transition: transform 0.2s ease, background-color 0.2s ease;
-                        }
+.floating-whatsapp-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--color-blue-brand, #1d4ed8);
+    color: #ffffff;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(29, 78, 216, 0.45);
+    z-index: 90;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
 
-                        .floating-whatsapp-btn:hover {
-                            transform: scale(1.08);
-                            background: #1e40af;
-                        }
+.floating-whatsapp-btn:hover {
+    transform: scale(1.08);
+    background: #1e40af;
+}
 
-                        /**
+/**
  * Etiqueta flotante que aparece al hacer hover sobre el botón.
  * Definida también en styles.css; se mantiene aquí como respaldo.
  */
-                        .floating-tooltip {
-                            position: fixed;
-                            bottom: 90px;
-                            right: 24px;
-                            background: var(--bg-surface);
-                            color: var(--text-primary);
-                            border: 1px solid var(--border-subtle);
-                            border-radius: var(--radius-md);
-                            padding: 6px 12px;
-                            font-size: 12px;
-                            font-weight: 600;
-                            white-space: nowrap;
-                            box-shadow: var(--shadow-md);
-                            opacity: 0;
-                            pointer-events: none;
-                            transition: opacity 0.2s ease;
-                            z-index: 89;
-                        }
+.floating-tooltip {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 89;
+}
 
-                        .floating-whatsapp-btn:hover+.floating-tooltip,
-                        .floating-whatsapp-btn:focus+.floating-tooltip {
-                            opacity: 1;
-                        }
+.floating-whatsapp-btn:hover + .floating-tooltip,
+.floating-whatsapp-btn:focus + .floating-tooltip {
+    opacity: 1;
+}
 
-                        /* ============================================================================
+/* ============================================================================
  * 5. BOTÓN "REGISTRAR OPERACIÓN DEMO" — CALCULADORA
  * ========================================================================= */
 
-                        /**
+/**
  * Reemplaza la versión anterior (fondo text-primary).
  * Ahora usa gradiente azul institucional para distinguirlo visualmente
  * de un botón de acción estándar. Abre el modal de registro de pago.
  */
-                        .btn-register-sale-demo {
-                            width: 100%;
-                            height: 46px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 8px;
-                            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
-                            color: #ffffff;
-                            border: none;
-                            border-radius: var(--radius-md);
-                            font-size: 14px;
-                            font-weight: 700;
-                            cursor: pointer;
-                            margin-top: 8px;
-                            transition: transform 0.15s ease, filter 0.15s ease;
-                            box-shadow: 0 3px 10px rgba(29, 78, 216, 0.3);
-                        }
+.btn-register-sale-demo {
+    width: 100%;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+    box-shadow: 0 3px 10px rgba(29, 78, 216, 0.3);
+}
 
-                        .btn-register-sale-demo:hover {
-                            filter: brightness(1.12);
-                            transform: translateY(-1px);
-                        }
+.btn-register-sale-demo:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
 
-                        .btn-register-sale-demo:active {
-                            transform: scale(0.98);
-                        }
+.btn-register-sale-demo:active {
+    transform: scale(0.98);
+}
 
-                        /* ============================================================================
+/* ============================================================================
  * 6. LEGADO — Mantener compatibilidad con clases anteriores
  * ========================================================================= */
 
-                        /**
+/**
  * support-banner-card: clase anterior que mezclaba canales de soporte.
  * Se mantiene con estilo neutro para no romper referencias HTML antiguas,
  * pero las nuevas implementaciones deben usar support-channel-card o
  * support-provider-card según corresponda.
  */
-                        .support-banner-card {
-                            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-                            color: #ffffff;
-                            border-radius: var(--radius-lg);
-                            padding: 24px;
-                            display: flex;
-                            flex-wrap: wrap;
-                            align-items: center;
-                            justify-content: space-between;
-                            gap: 18px;
-                            box-shadow: var(--shadow-md);
-                        }
+.support-banner-card {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    color: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    box-shadow: var(--shadow-md);
+}
 
-                        .support-banner-info {
-                            max-width: 520px;
-                        }
+.support-banner-info {
+    max-width: 520px;
+}
 
-                        .support-banner-title {
-                            font-size: 18px;
-                            font-weight: 800;
-                            margin-bottom: 4px;
-                        }
+.support-banner-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
 
-                        .support-banner-desc {
-                            font-size: 13.5px;
-                            color: #d1fae5;
-                            line-height: 1.4;
-                        }
+.support-banner-desc {
+    font-size: 13.5px;
+    color: #d1fae5;
+    line-height: 1.4;
+}
 
-                        /* Botón directo de WhatsApp (legado — mantener funcional) */
-                        .btn-whatsapp-direct {
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 8px;
-                            background: #25d366;
-                            color: #064e3b;
-                            font-size: 14px;
-                            font-weight: 800;
-                            padding: 12px 22px;
-                            border-radius: var(--radius-md);
-                            text-decoration: none;
-                            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
-                            transition: transform 0.15s ease, filter 0.15s ease;
-                        }
+/* Botón directo de WhatsApp (legado — mantener funcional) */
+.btn-whatsapp-direct {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25d366;
+    color: #064e3b;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 12px 22px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+}
 
-                        .btn-whatsapp-direct:hover {
-                            transform: translateY(-2px);
-                            filter: brightness(1.05);
-                        }
+.btn-whatsapp-direct:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
 
-                        /* ============================================================================
+/* ============================================================================
  * 7. RESPONSIVE — AJUSTES MÓVIL
  * ========================================================================= */
 
-                        @media (max-width: 540px) {
-                            .consignacion-grid {
-                                grid-template-columns: 1fr;
-                            }
+@media (max-width: 540px) {
+    .consignacion-grid {
+        grid-template-columns: 1fr;
+    }
 
-                            .bank-account-num {
-                                font-size: 17px;
-                            }
+    .bank-account-num {
+        font-size: 17px;
+    }
 
-                            .support-provider-card {
-                                flex-direction: column;
-                                align-items: flex-start;
-                            }
+    .support-provider-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-                            .btn-whatsapp-provider {
-                                width: 100%;
-                                justify-content: center;
-                            }
+    .btn-whatsapp-provider {
+        width: 100%;
+        justify-content: center;
+    }
 
-                            .btn-register-sale-demo {
-                                font-size: 13px;
-                                height: 44px;
-                            }
-                        }
+    .btn-register-sale-demo {
+        font-size: 13px;
+        height: 44px;
+    }
+}

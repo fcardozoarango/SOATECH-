@@ -90,7 +90,9 @@
         if (esLocalStorageDisponible()) {
             const raw = localStorage.getItem(STORAGE_KEY);
             if (raw) {
-                try { return JSON.parse(raw); } catch (e) {}
+                try {
+                    return JSON.parse(raw);
+                } catch (e) {}
             }
         }
         return memoriaFallback || inicializar();

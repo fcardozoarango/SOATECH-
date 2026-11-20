@@ -111,7 +111,9 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .kpi-card:hover {
@@ -159,7 +161,7 @@
     transition: all 0.25s ease;
 }
 
-[data-theme="dark"] .tutorial-banner-card {
+[data-theme='dark'] .tutorial-banner-card {
     background: linear-gradient(135deg, #132438 0%, #112d22 100%);
     border-color: #1e3a5f;
 }
@@ -415,19 +417,19 @@
 }
 
 /* Acentos de marca en tarjetas de edición */
-.account-edit-card[data-bank-id="bancolombia"] {
+.account-edit-card[data-bank-id='bancolombia'] {
     border-top: 4px solid #fd0;
 }
 
-.account-edit-card[data-bank-id="nequi"] {
+.account-edit-card[data-bank-id='nequi'] {
     border-top: 4px solid #bf1e62;
 }
 
-.account-edit-card[data-bank-id="davivienda"] {
+.account-edit-card[data-bank-id='davivienda'] {
     border-top: 4px solid #ed1c24;
 }
 
-.account-edit-card[data-bank-id="daviplata"] {
+.account-edit-card[data-bank-id='daviplata'] {
     border-top: 4px solid #eb1b23;
 }
 
@@ -665,7 +667,7 @@
     overflow: hidden;
 }
 
-[data-theme="dark"] .receipt-ticket {
+[data-theme='dark'] .receipt-ticket {
     background: #1e293b;
     color: #f8fafc;
     border-color: #334155;

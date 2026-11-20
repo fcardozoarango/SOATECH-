@@ -17,7 +17,7 @@
     --bg-surface-alt: #f8fafc;
     --bg-hover: #f1f5f9;
     --bg-active: #e2e8f0;
-    
+
     /* Tipografía y Textos */
     --text-primary: #0f172a;
     --text-secondary: #334155;
@@ -82,7 +82,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
     /* Paleta Oscura Profesional (Slate Mate Fintech) */
     --bg-app: #090d16;
     --bg-surface: #111827;
@@ -137,13 +137,16 @@
 /* ----------------------------------------------------------------------------
  * 2. Reset y Reglas Base
  * ------------------------------------------------------------------------- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -155,10 +158,15 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'tnum' on, 'lnum' on;
+    font-feature-settings:
+        'tnum' on,
+        'lnum' on;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
     font: inherit;
     color: inherit;
 }
@@ -1231,7 +1239,9 @@ button, input, select, textarea {
  * 8. Accesibilidad y Animación Reducida
  * ------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;

@@ -4,7 +4,7 @@
  * ============================================================================
  * Contiene las funciones matemáticas de liquidación, validación de entradas
  * y aplicación de comisiones dinámicas por punto de venta.
- * 
+ *
  * Reglas de integridad:
  * 1. La tarifa oficial del SOAT se toma exclusivamente de PRECIOS_BASE (2026) y
  *    es totalmente inmutable.
@@ -33,7 +33,12 @@
      */
     function formatearMoneda(valor) {
         if (typeof valor !== 'number' || isNaN(valor)) return '$0';
-        return '$' + Math.round(valor).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return (
+            '$' +
+            Math.round(valor)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        );
     }
 
     /**
@@ -141,14 +146,15 @@
         }
 
         // Esquema de rangos configurado para el punto de venta
-        const rangos = (posConfig && Array.isArray(posConfig.comisiones) && posConfig.comisiones.length > 0)
-            ? posConfig.comisiones
-            : [
-                { desde: 0, hasta: 999999, comision: 25000, etiqueta: 'SOAT menor a $1.000.000' },
-                { desde: 1000000, hasta: null, comision: 30000, etiqueta: 'SOAT desde $1.000.000' }
-            ];
+        const rangos =
+            posConfig && Array.isArray(posConfig.comisiones) && posConfig.comisiones.length > 0
+                ? posConfig.comisiones
+                : [
+                      { desde: 0, hasta: 999999, comision: 25000, etiqueta: 'SOAT menor a $1.000.000' },
+                      { desde: 1000000, hasta: null, comision: 30000, etiqueta: 'SOAT desde $1.000.000' }
+                  ];
 
-        let regla = rangos.find(r => {
+        let regla = rangos.find((r) => {
             const cumpleDesde = r.desde == null || precioBase >= r.desde;
             const cumpleHasta = r.hasta == null || precioBase <= r.hasta;
             return cumpleDesde && cumpleHasta;
@@ -159,7 +165,8 @@
         }
 
         const monto = regla ? Number(regla.comision) : 25000;
-        const etiqueta = regla?.etiqueta || (precioBase < 1000000 ? 'SOAT menor a $1.000.000' : 'SOAT desde $1.000.000');
+        const etiqueta =
+            regla?.etiqueta || (precioBase < 1000000 ? 'SOAT menor a $1.000.000' : 'SOAT desde $1.000.000');
 
         return {
             comisionNominal: monto,
@@ -175,7 +182,7 @@
      * - Tarifa oficial SOAT (Valor a consignar al proveedor)
      * - Comisión calculada del punto de venta
      * - Total a cobrar al cliente
-     * 
+     *
      * @param {object} estado Estado de la UI { svc, type, cc, year, ton, pax, p6 }
      * @param {object} tarifasData Módulo maestro de tarifas (SOAT_TARIFAS)
      * @param {object|null} posConfig Configuración opcional del punto de venta activo
@@ -184,28 +191,27 @@
     function liquidar(estado, tarifasData, posConfig = null) {
         if (!estado.type) return null;
 
-        const tipo = tarifasData.TIPOS.find(t => t.id === estado.type);
+        const tipo = tarifasData.TIPOS.find((t) => t.id === estado.type);
         if (!tipo) return null;
 
         // Regla especial para 6 o más pasajeros
         if (tipo.id === 'p6' && estado.p6 === 'no') {
             return {
                 incompleto: true,
-                errorEspecial: 'El tarifario usa esta categoría solo para vehículos con 6 o más pasajeros registrados. Elige otro tipo de vehículo.'
+                errorEspecial:
+                    'El tarifario usa esta categoría solo para vehículos con 6 o más pasajeros registrados. Elige otro tipo de vehículo.'
             };
         }
 
         // Verificar que todos los campos requeridos por este tipo estén diligenciados
-        const faltanCampos = tipo.preguntas.some(k => estado[k] == null);
+        const faltanCampos = tipo.preguntas.some((k) => estado[k] == null);
         if (faltanCampos) {
             return null;
         }
 
         // Parámetros para resolver el código tarifario oficial
         const anioRef = tarifasData.CONFIG.ANIO_TARIFA;
-        const antiguedad = estado.year != null 
-            ? calcularAntiguedad(estado.year, anioRef) 
-            : { anios: 0, codigo: 1 };
+        const antiguedad = estado.year != null ? calcularAntiguedad(estado.year, anioRef) : { anios: 0, codigo: 1 };
 
         const params = {
             cc: estado.cc,

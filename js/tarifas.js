@@ -5,7 +5,7 @@
  * Este archivo contiene las tablas oficiales de tarifas del SOAT vigentes
  * a partir del 1 de enero de 2026, las descripciones legales de cada código,
  * la clasificación de vehículos y los parámetros requeridos para su liquidación.
- * 
+ *
  * Diseñado para ser cargado tanto como script estándar (file:///)
  * como módulo ES.
  */
@@ -24,10 +24,10 @@
     // 1. Configuración de parámetros comerciales y vigencia
     const CONFIG = {
         ANIO_TARIFA: 2026,
-        UMBRAL_COMISION: 1000000,    // $1.000.000 COP
-        MARGEN_MENOR_UMBRAL: 25000,   // $25.000 COP si valor base < $1.000.000
-        MARGEN_MAYOR_UMBRAL: 30000,   // $30.000 COP si valor base >= $1.000.000
-        PASO_REDONDEO: 1000           // Redondeo al alza de $1.000 en $1.000
+        UMBRAL_COMISION: 1000000, // $1.000.000 COP
+        MARGEN_MENOR_UMBRAL: 25000, // $25.000 COP si valor base < $1.000.000
+        MARGEN_MAYOR_UMBRAL: 30000, // $30.000 COP si valor base >= $1.000.000
+        PASO_REDONDEO: 1000 // Redondeo al alza de $1.000 en $1.000
     };
 
     // 2. Precios fijos especiales (política comercial)
@@ -40,22 +40,22 @@
     // 3. Tabla oficial de precios base para Punto de Venta (Valor a Consignar)
     const PRECIOS_BASE = {
         // Ciclomotores y Motocicletas
-        10: 144100,   // Ciclomotor
-        110: 276200,  // Moto, menos de 100 c.c.
-        120: 363300,  // Moto, entre 100 y 200 c.c.
-        130: 781400,  // Moto, más de 200 c.c.
-        140: 406900,  // Motocarro (5 pasajeros), tricimoto y cuadriciclo
+        10: 144100, // Ciclomotor
+        110: 276200, // Moto, menos de 100 c.c.
+        120: 363300, // Moto, entre 100 y 200 c.c.
+        130: 781400, // Moto, más de 200 c.c.
+        140: 406900, // Motocarro (5 pasajeros), tricimoto y cuadriciclo
 
         // Camperos y Camionetas
-        211: 812800,  // < 1.500 c.c., menos de 10 años
-        212: 973000,  // < 1.500 c.c., 10 o más años
-        221: 966600,  // 1.500 - 2.500 c.c., menos de 10 años
+        211: 812800, // < 1.500 c.c., menos de 10 años
+        212: 973000, // < 1.500 c.c., 10 o más años
+        221: 966600, // 1.500 - 2.500 c.c., menos de 10 años
         222: 1146400, // 1.500 - 2.500 c.c., 10 o más años
         231: 1135300, // > 2.500 c.c., menos de 10 años
         232: 1299000, // > 2.500 c.c., 10 o más años
 
         // Carga o Mixto
-        310: 908400,  // Menos de 5 toneladas
+        310: 908400, // Menos de 5 toneladas
         320: 1307800, // De 5 a 15 toneladas
         330: 1646900, // Más de 15 toneladas
 
@@ -65,31 +65,31 @@
         430: 1535600, // Más de 2.500 c.c.
 
         // Vehículos Familiares
-        511: 467300,  // < 1.500 c.c., menos de 10 años
-        512: 612900,  // < 1.500 c.c., 10 o más años
-        521: 564700,  // 1.500 - 2.500 c.c., menos de 10 años
-        522: 697400,  // 1.500 - 2.500 c.c., 10 o más años
-        531: 656000,  // > 2.500 c.c., menos de 10 años
-        532: 774300,  // > 2.500 c.c., 10 o más años
+        511: 467300, // < 1.500 c.c., menos de 10 años
+        512: 612900, // < 1.500 c.c., 10 o más años
+        521: 564700, // 1.500 - 2.500 c.c., menos de 10 años
+        522: 697400, // 1.500 - 2.500 c.c., 10 o más años
+        531: 656000, // > 2.500 c.c., menos de 10 años
+        532: 774300, // > 2.500 c.c., 10 o más años
 
         // Vehículos de 6 o más pasajeros
-        611: 817300,  // < 2.500 c.c., menos de 10 años
+        611: 817300, // < 2.500 c.c., menos de 10 años
         612: 1042700, // < 2.500 c.c., 10 o más años
         621: 1092300, // >= 2.500 c.c., menos de 10 años
         622: 1306600, // >= 2.500 c.c., 10 o más años
 
         // Autos de Negocio / Taxis
-        711: 301900,  // < 1.500 c.c., menos de 10 años
-        712: 372000,  // < 1.500 c.c., 10 o más años
-        721: 370000,  // 1.500 - 2.500 c.c., menos de 10 años
-        722: 452400,  // 1.500 - 2.500 c.c., 10 o más años
-        731: 471400,  // > 2.500 c.c., menos de 10 años
-        732: 549300,  // > 2.500 c.c., 10 o más años
+        711: 301900, // < 1.500 c.c., menos de 10 años
+        712: 372000, // < 1.500 c.c., 10 o más años
+        721: 370000, // 1.500 - 2.500 c.c., menos de 10 años
+        722: 452400, // 1.500 - 2.500 c.c., 10 o más años
+        731: 471400, // > 2.500 c.c., menos de 10 años
+        732: 549300, // > 2.500 c.c., 10 o más años
 
         // Transporte Público Urbano e Intermunicipal
-        810: 693300,  // Servicio público urbano (municipal), buses y busetas
-        910: 685500,  // Intermunicipal, menos de 10 pasajeros
-        920: 985300   // Intermunicipal, 10 o más pasajeros
+        810: 693300, // Servicio público urbano (municipal), buses y busetas
+        910: 685500, // Intermunicipal, menos de 10 pasajeros
+        920: 985300 // Intermunicipal, 10 o más pasajeros
     };
 
     // 4. Catálogo de descripciones textuales para cada código

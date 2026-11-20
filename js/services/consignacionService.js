@@ -4,7 +4,7 @@
  * ============================================================================
  * Centraliza la información bancaria y cuentas del proveedor para que todos
  * los puntos de venta consulten la misma configuración oficial.
- * 
+ *
  * Permite que el Administrador edite o active/desactive cuentas bancarias
  * y que los puntos de venta consulten y copien la información al instante.
  */
@@ -46,7 +46,7 @@
     async function actualizarCuenta(cuentaId, camposActualizados) {
         const consignacion = await getDatosConsignacion();
         const cuentas = consignacion.cuentas || [];
-        const index = cuentas.findIndex(c => c.id === cuentaId);
+        const index = cuentas.findIndex((c) => c.id === cuentaId);
 
         if (index === -1) {
             throw new Error(`Cuenta ${cuentaId} no encontrada.`);

@@ -32,24 +32,25 @@
 
         // Filtro estricto por punto de venta (para aislamiento del POS o filtro del Admin)
         if (filtros.posId) {
-            ops = ops.filter(o => o.posId === filtros.posId);
+            ops = ops.filter((o) => o.posId === filtros.posId);
         }
 
         // Filtro por estado: 'Pendiente de revisión', 'Confirmada', 'Rechazada'
         if (filtros.estado && filtros.estado !== 'todos' && filtros.estado !== '') {
-            ops = ops.filter(o => o.estado && o.estado.toLowerCase() === filtros.estado.toLowerCase());
+            ops = ops.filter((o) => o.estado && o.estado.toLowerCase() === filtros.estado.toLowerCase());
         }
 
         // Filtro por término de búsqueda (ID, placa, nombre POS, descripción vehículo, código)
         if (filtros.terminoBusqueda) {
             const term = filtros.terminoBusqueda.toLowerCase().trim();
-            ops = ops.filter(o =>
-                (o.id && o.id.toLowerCase().includes(term)) ||
-                (o.posNombre && o.posNombre.toLowerCase().includes(term)) ||
-                (o.vehiculoDescripcion && o.vehiculoDescripcion.toLowerCase().includes(term)) ||
-                (o.placa && o.placa.toLowerCase().includes(term)) ||
-                (o.referenciaAprobacion && o.referenciaAprobacion.toLowerCase().includes(term)) ||
-                String(o.codigoTarifa).includes(term)
+            ops = ops.filter(
+                (o) =>
+                    (o.id && o.id.toLowerCase().includes(term)) ||
+                    (o.posNombre && o.posNombre.toLowerCase().includes(term)) ||
+                    (o.vehiculoDescripcion && o.vehiculoDescripcion.toLowerCase().includes(term)) ||
+                    (o.placa && o.placa.toLowerCase().includes(term)) ||
+                    (o.referenciaAprobacion && o.referenciaAprobacion.toLowerCase().includes(term)) ||
+                    String(o.codigoTarifa).includes(term)
             );
         }
 
@@ -62,7 +63,7 @@
      */
     async function getOperacionPorId(id) {
         const ops = storage.obtener('operaciones') || [];
-        return ops.find(o => o.id === id) || null;
+        return ops.find((o) => o.id === id) || null;
     }
 
     /**
@@ -93,7 +94,8 @@
             valorCobrar: datosLiquidacion.precioCobrar,
             estado: 'Pendiente de revisión',
             bancoOrigen: datosPago.bancoOrigen || 'Bancolombia',
-            referenciaAprobacion: datosPago.referenciaAprobacion || 'REF-' + Math.floor(100000 + Math.random() * 900000),
+            referenciaAprobacion:
+                datosPago.referenciaAprobacion || 'REF-' + Math.floor(100000 + Math.random() * 900000),
             comprobanteUrl: datosPago.comprobanteUrl || 'comprobante-demo.png',
             motivoRechazo: null,
             historial: [
@@ -116,7 +118,7 @@
      */
     async function confirmarOperacion(id, notas = '') {
         const ops = storage.obtener('operaciones') || [];
-        const index = ops.findIndex(o => o.id === id);
+        const index = ops.findIndex((o) => o.id === id);
 
         if (index === -1) {
             throw new Error(`Operación ${id} no encontrada.`);
@@ -148,7 +150,7 @@
         }
 
         const ops = storage.obtener('operaciones') || [];
-        const index = ops.findIndex(o => o.id === id);
+        const index = ops.findIndex((o) => o.id === id);
 
         if (index === -1) {
             throw new Error(`Operación ${id} no encontrada.`);
@@ -176,7 +178,7 @@
      */
     async function reenviarComprobante(id, datosPagoCorregido, autorNombre = 'Punto de Venta') {
         const ops = storage.obtener('operaciones') || [];
-        const index = ops.findIndex(o => o.id === id);
+        const index = ops.findIndex((o) => o.id === id);
 
         if (index === -1) {
             throw new Error(`Operación ${id} no encontrada.`);
@@ -211,18 +213,18 @@
         const puntos = storage.obtener('puntosDeVenta') || [];
 
         const totalOperaciones = ops.length;
-        const pendientes = ops.filter(o => o.estado === 'Pendiente de revisión').length;
-        const confirmadas = ops.filter(o => o.estado === 'Confirmada').length;
-        const rechazadas = ops.filter(o => o.estado === 'Rechazada').length;
+        const pendientes = ops.filter((o) => o.estado === 'Pendiente de revisión').length;
+        const confirmadas = ops.filter((o) => o.estado === 'Confirmada').length;
+        const rechazadas = ops.filter((o) => o.estado === 'Rechazada').length;
 
         const totalConsignado = ops.reduce((acc, cur) => acc + (cur.valorConsignar || 0), 0);
         const totalConsignadoConfirmado = ops
-            .filter(o => o.estado === 'Confirmada')
+            .filter((o) => o.estado === 'Confirmada')
             .reduce((acc, cur) => acc + (cur.valorConsignar || 0), 0);
         const totalComisiones = ops.reduce((acc, cur) => acc + (cur.comision || 0), 0);
         const totalVendido = ops.reduce((acc, cur) => acc + (cur.valorCobrar || 0), 0);
 
-        const posActivos = puntos.filter(p => p.estado === 'activo').length;
+        const posActivos = puntos.filter((p) => p.estado === 'activo').length;
         const posTotal = puntos.length;
 
         return {

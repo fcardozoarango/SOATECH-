@@ -5,7 +5,7 @@
  * Todos los registros de este archivo son EXCLUSIVAMENTE DEMOSTRATIVOS y
  * están identificados con la etiqueta [DEMO] para evitar confusiones con
  * establecimientos u operaciones reales.
- * 
+ *
  * Los datos de consignación del proveedor corresponden a la información
  * oficial entregada por Héctor Adrián Vargas Álvarez.
  */
@@ -33,13 +33,15 @@
             responsable: 'Héctor Vargas',
             telefono: '320 338 80 51',
             telefonoFormateado: '+57 320 338 8051',
-            whatsappUrl: 'https://wa.me/573203388051?text=Hola%20H%C3%A9ctor,%20necesito%20asistencia%20con%20una%20consignaci%C3%B3n%20o%20emisi%C3%B3n%20SOAT'
+            whatsappUrl:
+                'https://wa.me/573203388051?text=Hola%20H%C3%A9ctor,%20necesito%20asistencia%20con%20una%20consignaci%C3%B3n%20o%20emisi%C3%B3n%20SOAT'
         },
         // Soporte Técnico de la Plataforma SOATECH - Identificación Azul (Sin nombres personales)
         soporteTecnicoPlataforma: {
             nombre: 'Soporte Técnico SOATECH',
             telefono: '+57 324 442 5912',
-            whatsappUrl: 'https://wa.me/573244425912?text=Hola,%20necesito%20soporte%20t%C3%A9cnico%20en%20la%20plataforma%20SOATECH'
+            whatsappUrl:
+                'https://wa.me/573244425912?text=Hola,%20necesito%20soporte%20t%C3%A9cnico%20en%20la%20plataforma%20SOATECH'
         },
         cuentas: [
             {
@@ -466,7 +468,8 @@
             bancoOrigen: 'Nequi',
             referenciaAprobacion: 'NQ-771802',
             comprobanteUrl: 'demo-receipt-03.png',
-            motivoRechazo: 'El comprobante adjunto está borroso y el valor transferido ($900.000) no corresponde a la tarifa oficial requerida ($966.600). Por favor verificar y reenviar.',
+            motivoRechazo:
+                'El comprobante adjunto está borroso y el valor transferido ($900.000) no corresponde a la tarifa oficial requerida ($966.600). Por favor verificar y reenviar.',
             historial: [
                 {
                     fecha: '2026-02-19T14:45:00',
