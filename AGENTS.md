@@ -29,6 +29,8 @@ css/styles.css                  Tokens de diseño (claro/oscuro), layout y calcu
 css/admin.css                   Pestañas, tablas, formularios y modales
 css/pos.css                     Vistas del punto de venta, soporte y WhatsApp
 css/feedback.css                Notificaciones (toasts), diálogo de confirmación y ajustes móviles
+css/theme.css                   TEMA VISUAL ACTUAL (se carga último): tokens, dock, barra superior,
+                                tarjetas, animaciones y modo oscuro. Los estilos nuevos van aquí.
 js/tarifas.js                   Tarifario oficial 2026  (window.SOAT_TARIFAS)
 js/calculadora.js               Motor de liquidación    (window.SOAT_CALCULADORA)
 js/data/mockData.js             Datos demo iniciales: 20 POS, cuentas, operaciones
@@ -52,11 +54,25 @@ El orden de los `<script>` en `index.html` importa: datos → servicios → tari
    - `await confirmar({ titulo, mensaje, textoConfirmar, peligro })` → devuelve `true`/`false`
 3. **Escapar todo texto que escriba un usuario** antes de insertarlo con `innerHTML`:
    `${escaparHtml(valor)}`. Aplica a placas, referencias, motivos, nombres, cuentas, etc.
-4. **Usar los tokens CSS** de `css/styles.css` (`--bg-surface`, `--text-primary`, `--accent-primary`,
-   `--success-*`, `--warning-*`, `--error-*`, `--radius-*`, `--shadow-*`). No inventar colores fijos;
-   así el modo oscuro sigue funcionando.
-5. Colores con significado: **azul** = plataforma/soporte SOATECH, **verde** = proveedor/confirmado,
-   **naranja** = pendiente, **rojo** = rechazado/peligro.
+4. **Usar los tokens CSS** definidos en `css/theme.css`. No inventar colores fijos; así el modo oscuro
+   sigue funcionando. Tokens principales:
+   - Superficies: `--paper` (fondo), `--paper-raised` (tarjeta blanca), `--stone` y `--clay` (tarjetas grises),
+     `--ink` (tarjeta/botón negro) con su texto `--on-ink`. En modo oscuro `--ink` se invierte a claro.
+   - Texto: `--text-primary`, `--text-secondary`, `--text-muted`.
+   - Estados: `--success-*`, `--warning-*`, `--error-*`. Acento menta para deltas sobre negro: `--mint`.
+   - Forma y movimiento: `--radius-lg` (22 px, tarjetas), `999px` para píldoras, `--ease-out`.
+5. **Estilo visual "papel y tinta"** (inspirado en dashboards monocromáticos tipo Corbel):
+   - Monocromático: el color solo comunica estado (**verde** confirmado/ganancia, **ámbar** pendiente,
+     **rojo** rechazado). Nada de degradados ni bordes de color a la izquierda.
+   - Tarjetas sin borde, radio 22 px; botones en píldora (`btn-primary-action` negro,
+     `btn-action-sm` claro con anillo interior).
+   - **Sin emojis.** Los iconos salen del sprite SVG al inicio de `index.html`
+     (`<svg class="ico"><use href="#i-nombre" /></svg>`, o `ico('nombre')` en JS). Para un icono nuevo,
+     agrega un `<symbol>` al sprite con trazo 1.8 y `stroke="currentColor"`.
+   - Navegación: pestañas en `construirMenuNavegacion()` (barra superior con indicador deslizante) y
+     herramientas en el dock lateral (`.dock__btn` con `.dock__tip`). Títulos de cada vista en `VISTAS_INFO`.
+   - Animaciones: las vistas entran con la clase `view-enter` (sube y se desenfoca suave, escalonado).
+     Respetar `prefers-reduced-motion` (ya está cubierto en `theme.css`).
 6. Todo el texto visible va en **español** de Colombia.
 7. Los datos del historial de una operación usan los campos `fecha`, `estado`, `autor`, `nota`.
 8. Mantener la app usable en celular (probar a 375 px de ancho, sin scroll horizontal).

@@ -370,7 +370,7 @@
             rolEtiqueta: 'Administrador / Proveedor',
             correo: 'hector.vargas@soatech.demo',
             posId: null,
-            avatar: '🛡️'
+            avatar: 'HV'
         },
         {
             id: 'usr-pos-01-demo',
@@ -379,7 +379,7 @@
             rolEtiqueta: 'Punto de Venta 01 (Bogotá)',
             correo: 'carlos.gomez@soatech.demo',
             posId: 'DEMO-POS-01',
-            avatar: '🏪'
+            avatar: 'PV'
         },
         {
             id: 'usr-pos-02-demo',
@@ -388,7 +388,7 @@
             rolEtiqueta: 'Punto de Venta 02 (Chapinero)',
             correo: 'maria.rios@soatech.demo',
             posId: 'DEMO-POS-02',
-            avatar: '🏪'
+            avatar: 'PV'
         }
     ];
 

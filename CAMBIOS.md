@@ -1,5 +1,24 @@
 # Historial de cambios
 
+## 2026-11-20 (2) — Nuevo diseño "papel y tinta"
+
+- **Nuevo diseño** inspirado en dashboards monocromáticos (estilo Corbel): fondo papel, tarjetas negras,
+  blancas y grises de radio amplio, tipografía Urbanist y color solo para estados.
+- **Dock lateral flotante** con herramientas: cambiar perfil, limpiar calculadora, restablecer demo,
+  soporte por WhatsApp y modo claro/oscuro (con tooltips). En celular pasa a la parte inferior.
+- **Barra superior en píldora** con indicador que se desliza a la pestaña activa y contadores en vivo
+  (operaciones pendientes para el admin, rechazadas para el punto de venta).
+- **Encabezado de página** con título por vista, chip «Modo demo» animado, perfil y tarifario.
+- **Resumen del administrador rediseñado:** 4 tarjetas KPI (puntos activos, total vendido, consignado con
+  anillo de % confirmado, comisiones con mini barras), panel de estado de operaciones y ranking de ventas
+  por punto. Las tarjetas tienen enlaces directos («Revisar pendientes» ya abre la lista filtrada).
+- **Animaciones:** entrada escalonada de cada vista, contadores que suben, barras y anillos que se dibujan,
+  modales con desenfoque. Todo se desactiva si el sistema pide movimiento reducido.
+- **Sin emojis:** reemplazados por un set de iconos SVG propio.
+- Modo oscuro completo con la misma paleta invertida.
+- Tablas más legibles: nombres sin el prefijo «[DEMO]», columnas con ancho mínimo y desplazamiento
+  horizontal en pantallas pequeñas.
+
 ## 2026-11-20 — Reparación y mejoras de la demo
 
 ### Correcciones

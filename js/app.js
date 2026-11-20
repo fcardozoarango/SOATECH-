@@ -125,6 +125,11 @@
         modalDemoAuth: document.getElementById('modalDemoAuth'),
         btnCloseAuthModal: document.getElementById('btnCloseAuthModal'),
         btnCancelAuthModal: document.getElementById('btnCancelAuthModal'),
+        btnAvatarPerfil: document.getElementById('btnAvatarPerfil'),
+        avatarIniciales: document.getElementById('avatarIniciales'),
+        pageTitle: document.getElementById('pageTitle'),
+        pageSubtitle: document.getElementById('pageSubtitle'),
+        adminDashGrid: document.getElementById('adminDashGrid'),
         btnSelectAdminProfile: document.getElementById('btnSelectAdminProfile'),
         btnSelectPos1Profile: document.getElementById('btnSelectPos1Profile'),
         btnSelectPos2Profile: document.getElementById('btnSelectPos2Profile'),
@@ -223,7 +228,7 @@
             .map(
                 (p) => `
             <option value="${p.id}" ${p.estado === 'inactivo' ? 'disabled' : ''}>
-                ${p.nombre} ${p.estado === 'inactivo' ? '(Inactivo)' : ''}
+                ${nombreCorto(p.nombre)} ${p.estado === 'inactivo' ? '(Inactivo)' : ''}
             </option>
         `
             )
@@ -238,11 +243,21 @@
         if (!usuarioActual) return;
 
         if (dom.demoActiveProfileName) {
-            dom.demoActiveProfileName.textContent = `${usuarioActual.nombre} (${usuarioActual.rolEtiqueta})`;
+            const p = usuarioActual.nombre.split(/\s+/);
+            dom.demoActiveProfileName.textContent = `${p[0]} ${p[p.length >= 3 ? 2 : 1] || ''} · ${usuarioActual.rolEtiqueta}`;
+            dom.demoActiveProfileName.title = `${usuarioActual.nombre} (${usuarioActual.rolEtiqueta})`;
         }
 
         if (dom.headerRoleBadge) {
-            dom.headerRoleBadge.textContent = usuarioActual.rol === 'admin' ? 'Proveedor' : 'Punto de Venta';
+            dom.headerRoleBadge.textContent = usuarioActual.rol === 'admin' ? 'Proveedor' : 'Punto de venta';
+        }
+
+        if (dom.avatarIniciales) {
+            const partes = usuarioActual.nombre.split(/\s+/).filter(Boolean);
+            const apellido = partes[partes.length >= 3 ? 2 : 1] || '';
+            const iniciales = (partes[0] || '?')[0] + (apellido[0] || '');
+            dom.avatarIniciales.textContent = iniciales.toUpperCase();
+            dom.btnAvatarPerfil.title = `${usuarioActual.nombre} · Cambiar perfil`;
         }
 
         if (dom.summaryHeaderPos && posActivo) {
@@ -266,39 +281,111 @@
     /* =========================================================================
      * 5. NAVEGACIÓN POR PESTAÑAS Y CONTROL DE VISTAS
      * ====================================================================== */
+    /** Títulos y descripciones del encabezado de cada vista. */
+    const VISTAS_INFO = {
+        admin_dashboard: { titulo: 'Resumen', sub: 'Actividad de los puntos de venta conectados a tu red.' },
+        admin_pos: { titulo: 'Puntos de venta', sub: 'Activa o desactiva establecimientos y ajusta sus comisiones.' },
+        admin_consignacion: {
+            titulo: 'Cuentas del proveedor',
+            sub: 'Cuentas donde los puntos consignan el valor oficial del SOAT.'
+        },
+        admin_operaciones: { titulo: 'Operaciones', sub: 'Revisa comprobantes y aprueba o rechaza cada transacción.' },
+        calculadora: {
+            titulo: 'Calculadora SOAT',
+            sub: 'Cotiza con el tarifario oficial 2026 y la comisión del punto activo.'
+        },
+        pos_consignacion: {
+            titulo: 'Cuentas para consignar',
+            sub: 'Transfiere el valor oficial a cualquiera de estas cuentas.'
+        },
+        pos_comisiones: { titulo: 'Mis comisiones', sub: 'Lo que ganas por cada venta según el valor del SOAT.' },
+        pos_operaciones: { titulo: 'Mis operaciones', sub: 'Ventas registradas por tu punto y su estado de revisión.' },
+        pos_soporte: { titulo: 'Soporte', sub: 'Elige el canal según tu duda: plataforma o proveedor.' }
+    };
+
+    /** Nombre de un punto sin el prefijo [DEMO] de los datos de prueba. */
+    function nombreCorto(nombre) {
+        return String(nombre || '').replace('[DEMO] ', '');
+    }
+
+    /** Icono del sprite SVG de index.html. */
+    function ico(id) {
+        return `<svg class="ico" aria-hidden="true"><use href="#i-${id}" /></svg>`;
+    }
+
     function construirMenuNavegacion() {
         if (!dom.mainNavTabs) return;
 
-        let tabs = [];
-        if (usuarioActual.rol === 'admin') {
-            tabs = [
-                { id: 'admin_dashboard', label: '📊 Resumen General', default: true },
-                { id: 'admin_pos', label: '🏢 Puntos de Venta (20)' },
-                { id: 'admin_consignacion', label: '💳 Cuentas del Proveedor' },
-                { id: 'admin_operaciones', label: '📋 Monitoreo de Operaciones' },
-                { id: 'calculadora', label: '🧮 Calculadora SOAT' }
-            ];
-        } else {
-            tabs = [
-                { id: 'calculadora', label: '🧮 Calculadora SOAT', default: true },
-                { id: 'pos_consignacion', label: '💳 Cuentas para Consignar' },
-                { id: 'pos_comisiones', label: '📈 Mis Comisiones' },
-                { id: 'pos_operaciones', label: '📑 Mis Operaciones' },
-                { id: 'pos_soporte', label: '💬 Soporte WhatsApp' }
-            ];
-        }
+        const tabs =
+            usuarioActual.rol === 'admin'
+                ? [
+                      { id: 'admin_dashboard', label: 'Resumen' },
+                      { id: 'admin_pos', label: 'Puntos de venta', contador: 'puntos' },
+                      { id: 'admin_consignacion', label: 'Cuentas' },
+                      { id: 'admin_operaciones', label: 'Operaciones', contador: 'pendientes' },
+                      { id: 'calculadora', label: 'Calculadora' }
+                  ]
+                : [
+                      { id: 'calculadora', label: 'Calculadora' },
+                      { id: 'pos_consignacion', label: 'Cuentas' },
+                      { id: 'pos_comisiones', label: 'Comisiones' },
+                      { id: 'pos_operaciones', label: 'Mis operaciones', contador: 'rechazadas' },
+                      { id: 'pos_soporte', label: 'Soporte' }
+                  ];
 
-        dom.mainNavTabs.innerHTML = tabs
-            .map(
-                (t) => `
+        dom.mainNavTabs.innerHTML =
+            '<span class="topnav__indicator" aria-hidden="true"></span>' +
+            tabs
+                .map(
+                    (t) => `
             <button type="button"
-                    class="nav-tab-btn ${t.id === vistaActiva ? 'active' : ''}"
+                    class="topnav__btn nav-tab-btn ${t.id === vistaActiva ? 'active' : ''}"
                     data-target-view="${t.id}">
                 <span>${t.label}</span>
-            </button>
-        `
-            )
-            .join('');
+                ${t.contador ? `<span class="topnav__count" data-contador="${t.contador}" hidden></span>` : ''}
+            </button>`
+                )
+                .join('');
+        actualizarContadoresNav();
+    }
+
+    /** Actualiza los contadores de la barra superior (pendientes, rechazadas, puntos). */
+    async function actualizarContadoresNav() {
+        if (!dom.mainNavTabs || !usuarioActual) return;
+        const valores = {};
+        if (usuarioActual.rol === 'admin') {
+            const m = await OPERACIONES_SERVICE.getMetricasResumen();
+            valores.puntos = m.posActivos;
+            valores.pendientes = m.pendientes;
+        } else if (posActivo) {
+            const ops = await OPERACIONES_SERVICE.getOperaciones({ posId: posActivo.id, estado: 'Rechazada' });
+            valores.rechazadas = ops.length;
+        }
+        dom.mainNavTabs.querySelectorAll('[data-contador]').forEach((el) => {
+            const v = valores[el.dataset.contador] || 0;
+            el.textContent = v;
+            el.hidden = v === 0;
+            el.classList.toggle('topnav__count--alerta', el.dataset.contador !== 'puntos');
+        });
+        moverIndicadorNav();
+    }
+
+    /** Desliza la píldora blanca de la navegación hasta la pestaña activa. */
+    function moverIndicadorNav() {
+        const nav = dom.mainNavTabs;
+        if (!nav) return;
+        const activa = nav.querySelector('.topnav__btn.active');
+        const indicador = nav.querySelector('.topnav__indicator');
+        if (!activa || !indicador) return;
+        indicador.style.width = `${activa.offsetWidth}px`;
+        indicador.style.transform = `translateX(${activa.offsetLeft}px)`;
+        indicador.classList.add('is-ready');
+        if (nav.scrollWidth > nav.clientWidth) {
+            nav.scrollTo({
+                left: activa.offsetLeft - (nav.clientWidth - activa.offsetWidth) / 2,
+                behavior: PREFIERE_MOVIMIENTO_REDUCIDO ? 'auto' : 'smooth'
+            });
+        }
     }
 
     async function cambiarVista(idVista) {
@@ -309,17 +396,32 @@
             if (dom.views[key]) dom.views[key].style.display = 'none';
         });
 
-        // Mostrar la vista seleccionada
-        if (dom.views[idVista]) {
+        // Mostrar la vista seleccionada con su animación de entrada
+        const vista = dom.views[idVista];
+        if (vista) {
             // La calculadora usa layout block; las demás usan flex
-            dom.views[idVista].style.display = idVista === 'calculadora' ? 'block' : 'flex';
+            vista.style.display = idVista === 'calculadora' ? 'block' : 'flex';
+            vista.classList.remove('view-enter');
+            void vista.offsetWidth; // reinicia la animación
+            vista.classList.add('view-enter');
+        }
+
+        // Encabezado de la página
+        const info = VISTAS_INFO[idVista];
+        if (info && dom.pageTitle) {
+            dom.pageTitle.textContent = info.titulo;
+            dom.pageSubtitle.textContent = info.sub;
+            document.title = `${info.titulo} · SOATECH`;
         }
 
         // Actualizar pestañas activas
         document.querySelectorAll('.nav-tab-btn').forEach((btn) => {
             const esActiva = btn.getAttribute('data-target-view') === idVista;
             btn.classList.toggle('active', esActiva);
+            if (esActiva) btn.setAttribute('aria-current', 'page');
+            else btn.removeAttribute('aria-current');
         });
+        moverIndicadorNav();
 
         // Cargar datos correspondientes a la vista
         if (idVista === 'admin_dashboard') await renderAdminDashboard();
@@ -328,7 +430,7 @@
             aplicarEstadoTutorial();
         }
         if (idVista === 'admin_consignacion') await renderAdminConsignacionForm();
-        if (idVista === 'admin_operaciones') await renderAdminOperacionesTable();
+        if (idVista === 'admin_operaciones') await renderAdminOperacionesTable(obtenerFiltrosAdminActuales());
         if (idVista === 'pos_consignacion') await renderPosConsignacionCards();
         if (idVista === 'pos_comisiones') await renderPosComisionesTable();
         if (idVista === 'pos_operaciones') await renderPosOperacionesTable();
@@ -339,35 +441,177 @@
      * ====================================================================== */
 
     async function renderAdminDashboard() {
-        const metricas = await OPERACIONES_SERVICE.getMetricasResumen();
+        const m = await OPERACIONES_SERVICE.getMetricasResumen();
+        const ops = await OPERACIONES_SERVICE.getOperaciones({});
+        const puntos = await POS_SERVICE.getPuntosVenta();
+        const pctConfirmado = m.totalConsignado
+            ? Math.round((m.totalConsignadoConfirmado / m.totalConsignado) * 100)
+            : 0;
+        const comisionPromedio = m.totalOperaciones ? Math.round(m.totalComisiones / m.totalOperaciones) : 0;
+        const ticketPromedio = m.totalOperaciones ? Math.round(m.totalVendido / m.totalOperaciones) : 0;
+        const ring = 2 * Math.PI * 17;
+
+        // Comisiones de las últimas operaciones para las barras de la tarjeta 4
+        const ultimas = ops
+            .slice()
+            .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+            .slice(-10);
+        const maxCom = Math.max(1, ...ultimas.map((o) => o.comision || 0));
+
         dom.adminKpiGrid.innerHTML = `
-            <div class="kpi-card">
-                <span class="kpi-card-title">Puntos de Venta Conectados</span>
-                <span class="kpi-card-value">${metricas.posActivos}
-                    <span style="font-size:16px;color:var(--text-muted);font-weight:600;">
-                        / ${metricas.posTotal}
-                    </span>
-                </span>
-                <span class="kpi-card-sub" style="color:var(--success-solid);">✓ Red operativa activa</span>
-            </div>
-            <div class="kpi-card">
-                <span class="kpi-card-title">Total Operaciones Emitidas</span>
-                <span class="kpi-card-value">${metricas.totalOperaciones}</span>
-                <span class="kpi-card-sub">Transacciones registradas en demo</span>
-            </div>
-            <div class="kpi-card">
-                <span class="kpi-card-title">Monto Oficial Consignado</span>
-                <span class="kpi-card-value">${CALC.formatearMoneda(metricas.totalConsignado)}</span>
-                <span class="kpi-card-sub">Transferido a cuentas de Héctor Vargas</span>
-            </div>
-            <div class="kpi-card">
-                <span class="kpi-card-title">Comisiones de la Red</span>
-                <span class="kpi-card-value" style="color:var(--accent-primary);">
-                    ${CALC.formatearMoneda(metricas.totalComisiones)}
-                </span>
-                <span class="kpi-card-sub">Ganancia generada para puntos de venta</span>
-            </div>
+            <article class="kpi-card kpi-card--ink">
+                <span class="kpi-card-title">Puntos activos</span>
+                <div class="kpi-card-row">
+                    <div>
+                        <span class="kpi-card-value" data-count="${m.posActivos}">${m.posActivos}</span><span class="kpi-card-of">/ ${m.posTotal}</span>
+                        <span class="delta delta--up">${m.posTotal - m.posActivos} inactivos</span>
+                    </div>
+                    <div class="mini-dots" aria-hidden="true">
+                        ${puntos.map((p) => `<i class="${p.estado === 'activo' ? 'on' : ''}"></i>`).join('')}
+                    </div>
+                </div>
+                <span class="kpi-card-sub">de la red conectada</span>
+                <button type="button" class="kpi-link" data-goto="admin_pos">Ver puntos</button>
+            </article>
+            <article class="kpi-card kpi-card--paper">
+                <span class="kpi-card-title">Total vendido</span>
+                <div class="kpi-card-row">
+                    <div>
+                        <span class="kpi-card-value" data-count="${m.totalVendido}" data-money>${CALC.formatearMoneda(m.totalVendido)}</span>
+                        <span class="delta delta--up">${m.totalOperaciones} operaciones</span>
+                    </div>
+                </div>
+                <span class="kpi-card-sub">Ticket promedio ${CALC.formatearMoneda(ticketPromedio)}</span>
+                <button type="button" class="kpi-link" data-goto="admin_operaciones">Ver operaciones</button>
+            </article>
+            <article class="kpi-card kpi-card--stone">
+                <span class="kpi-card-title">Consignado al proveedor</span>
+                <div class="kpi-card-row">
+                    <div>
+                        <span class="kpi-card-value" data-count="${m.totalConsignado}" data-money>${CALC.formatearMoneda(m.totalConsignado)}</span>
+                        <span class="delta">${CALC.formatearMoneda(m.totalConsignadoConfirmado)} confirmado</span>
+                    </div>
+                    <svg class="ring" viewBox="0 0 40 40" aria-label="${pctConfirmado}% confirmado">
+                        <circle cx="20" cy="20" r="17" class="ring__track" />
+                        <circle cx="20" cy="20" r="17" class="ring__value"
+                                stroke-dasharray="${ring}" stroke-dashoffset="${ring * (1 - pctConfirmado / 100)}" />
+                        <text x="20" y="23.5" text-anchor="middle">${pctConfirmado}%</text>
+                    </svg>
+                </div>
+                <span class="kpi-card-sub">Tarifa oficial, sin comisiones</span>
+                <button type="button" class="kpi-link" data-goto="admin_consignacion">Ver cuentas</button>
+            </article>
+            <article class="kpi-card kpi-card--clay">
+                <span class="kpi-card-title">Comisiones de la red</span>
+                <div class="kpi-card-row">
+                    <div>
+                        <span class="kpi-card-value" data-count="${m.totalComisiones}" data-money>${CALC.formatearMoneda(m.totalComisiones)}</span>
+                        <span class="delta">${CALC.formatearMoneda(comisionPromedio)} por venta</span>
+                    </div>
+                    <div class="mini-bars" aria-hidden="true">
+                        ${ultimas.map((o, i) => `<i style="height:${Math.max(18, Math.round(((o.comision || 0) / maxCom) * 100))}%" class="${i === ultimas.length - 1 ? 'last' : ''}"></i>`).join('')}
+                    </div>
+                </div>
+                <span class="kpi-card-sub">Ganancia de los puntos de venta</span>
+                <button type="button" class="kpi-link" data-goto="calculadora">Abrir calculadora</button>
+            </article>
         `;
+
+        renderAdminDashGrid(m, ops, puntos);
+        animarContadores(dom.adminKpiGrid);
+    }
+
+    /** Segunda fila del resumen: estado de operaciones y ventas por punto. */
+    function renderAdminDashGrid(m, ops, puntos) {
+        if (!dom.adminDashGrid) return;
+        const total = Math.max(1, m.totalOperaciones);
+        const seg = (n) => `${((n / total) * 100).toFixed(1)}%`;
+
+        const porPunto = puntos
+            .map((p) => {
+                const propias = ops.filter((o) => o.posId === p.id);
+                return {
+                    nombre: p.nombre.replace('[DEMO] ', ''),
+                    ciudad: p.ciudad,
+                    vendido: propias.reduce((a, o) => a + (o.valorCobrar || 0), 0),
+                    cantidad: propias.length
+                };
+            })
+            .filter((p) => p.cantidad > 0)
+            .sort((a, b) => b.vendido - a.vendido)
+            .slice(0, 6);
+        const maxVendido = Math.max(1, ...porPunto.map((p) => p.vendido));
+
+        dom.adminDashGrid.innerHTML = `
+            <article class="panel panel--ink">
+                <header class="panel__head">
+                    <h3 class="panel__title">Estado de operaciones</h3>
+                    <span class="panel__hint">${m.totalOperaciones} en total</span>
+                </header>
+                <div class="status-hero">
+                    <span class="status-hero__value" data-count="${m.pendientes}">${m.pendientes}</span>
+                    <span class="status-hero__label">${m.pendientes === 1 ? 'operación espera' : 'operaciones esperan'} tu revisión</span>
+                </div>
+                <div class="stack-bar" role="img"
+                     aria-label="${m.confirmadas} confirmadas, ${m.pendientes} pendientes, ${m.rechazadas} rechazadas">
+                    <i class="stack-bar__ok" style="width:${seg(m.confirmadas)}"></i>
+                    <i class="stack-bar__wait" style="width:${seg(m.pendientes)}"></i>
+                    <i class="stack-bar__no" style="width:${seg(m.rechazadas)}"></i>
+                </div>
+                <ul class="stack-legend">
+                    <li><i class="stack-bar__ok"></i> Confirmadas <strong>${m.confirmadas}</strong></li>
+                    <li><i class="stack-bar__wait"></i> Pendientes <strong>${m.pendientes}</strong></li>
+                    <li><i class="stack-bar__no"></i> Rechazadas <strong>${m.rechazadas}</strong></li>
+                </ul>
+                <button type="button" class="kpi-link" data-goto="admin_operaciones" data-filtro-estado="Pendiente de revisión">
+                    Revisar pendientes
+                </button>
+            </article>
+            <article class="panel">
+                <header class="panel__head">
+                    <h3 class="panel__title">Ventas por punto</h3>
+                    <span class="panel__hint">Total cobrado a clientes</span>
+                </header>
+                ${
+                    porPunto.length
+                        ? `<ol class="rank-list">
+                    ${porPunto
+                        .map(
+                            (p, i) => `
+                        <li class="rank-row" style="--i:${i}">
+                            <div class="rank-row__label">
+                                <strong>${escaparHtml(p.nombre)}</strong>
+                                <span>${escaparHtml(p.ciudad)} · ${p.cantidad} ${p.cantidad === 1 ? 'venta' : 'ventas'}</span>
+                            </div>
+                            <div class="rank-row__bar"><i style="width:${Math.round((p.vendido / maxVendido) * 100)}%"></i></div>
+                            <span class="rank-row__value">${CALC.formatearMoneda(p.vendido)}</span>
+                        </li>`
+                        )
+                        .join('')}
+                </ol>`
+                        : '<p class="panel__empty">Aún no hay ventas registradas en la red.</p>'
+                }
+            </article>
+        `;
+        animarContadores(dom.adminDashGrid);
+    }
+
+    /** Cuenta de 0 al valor final en los elementos con data-count (una sola vez por render). */
+    function animarContadores(raiz) {
+        if (PREFIERE_MOVIMIENTO_REDUCIDO) return;
+        raiz.querySelectorAll('[data-count]').forEach((el) => {
+            const final = Number(el.dataset.count) || 0;
+            const esDinero = el.hasAttribute('data-money');
+            const inicio = performance.now();
+            const duracion = 900;
+            const paso = (ahora) => {
+                const p = Math.min(1, (ahora - inicio) / duracion);
+                const v = Math.round(final * (1 - Math.pow(1 - p, 4)));
+                el.textContent = esDinero ? CALC.formatearMoneda(v) : v;
+                if (p < 1) requestAnimationFrame(paso);
+            };
+            requestAnimationFrame(paso);
+        });
     }
 
     async function renderAdminPosTable(filtro = '') {
@@ -386,7 +630,7 @@
                 return `
                 <tr>
                     <td><span class="code-pill">${p.codigo}</span></td>
-                    <td><strong>${p.nombre}</strong></td>
+                    <td><strong>${nombreCorto(p.nombre)}</strong></td>
                     <td>${p.ciudad} (${p.departamento})</td>
                     <td>${p.responsable}</td>
                     <td>
@@ -408,7 +652,7 @@
                         <button type="button" class="btn-action-sm"
                                 data-action="edit-comision" data-pos-id="${p.id}"
                                 style="margin-left:4px;">
-                            ⚙️ Comisiones
+                            ${ico('gear')} Comisiones
                         </button>
                     </td>
                 </tr>
@@ -486,7 +730,7 @@
         if (dom.filterPosSelect && dom.filterPosSelect.options.length <= 1) {
             dom.filterPosSelect.innerHTML =
                 '<option value="">Todos los puntos de venta</option>' +
-                puntos.map((p) => `<option value="${p.id}">${p.nombre}</option>`).join('');
+                puntos.map((p) => `<option value="${p.id}">${nombreCorto(p.nombre)}</option>`).join('');
         }
 
         dom.adminOperacionesTableBody.innerHTML =
@@ -500,7 +744,7 @@
                           return `
                     <tr>
                         <td><span class="code-pill">${o.id}</span></td>
-                        <td><strong>${o.posNombre}</strong></td>
+                        <td><strong>${nombreCorto(o.posNombre)}</strong></td>
                         <td>${formatearFechaHora(o.fecha)}</td>
                         <td>${o.placa ? `<span class="code-pill">${escaparHtml(o.placa)}</span> ` : ''}${o.vehiculoDescripcion}
                             <small style="display:block;color:var(--text-muted);">${o.servicio}</small>
@@ -671,7 +915,7 @@
                                            class="btn-action-sm"
                                            data-action="corregir-op"
                                            data-op-id="${o.id}">
-                                       🔄 Corregir y Reenviar
+                                       ${ico('reset')} Corregir y reenviar
                                    </button>`
                                     : '—'
                             }
@@ -1046,7 +1290,7 @@
 
             <!-- Botón para abrir el modal de registro de pago -->
             <button type="button" class="btn-register-sale-demo" id="btnRegisterDemoSale">
-                ✓ Registrar Operación Demo
+                ${ico('check')} Registrar operación demo
             </button>
 
             <!-- 4. Ficha Técnica con Desglose y Reglas de Integridad -->
@@ -1167,7 +1411,7 @@
                 <div class="operation-info-card">
                     <div class="op-detail-row">
                         <span class="op-detail-label">Punto de Venta</span>
-                        <span class="op-detail-val">${op.posNombre}</span>
+                        <span class="op-detail-val">${nombreCorto(op.posNombre)}</span>
                     </div>
                     <div class="op-detail-row">
                         <span class="op-detail-label">Fecha</span>
@@ -1303,11 +1547,11 @@
                 </div>
                 <button type="button" class="btn-approve-op" id="btnConfirmarOp"
                         data-op-id="${op.id}">
-                    ✓ Confirmar Pago
+                    ${ico('check')} Confirmar pago
                 </button>
                 <button type="button" class="btn-reject-op" id="btnRechazarOpIniciar"
                         data-op-id="${op.id}">
-                    ✕ Rechazar
+                    ${ico('close')} Rechazar
                 </button>
                 <button type="button" class="btn-reject-op" id="btnEnviarRechazo"
                         data-op-id="${op.id}"
@@ -1361,6 +1605,7 @@
     async function confirmarOperacionDesdeModal(opId) {
         try {
             await OPERACIONES_SERVICE.confirmarOperacion(opId);
+            actualizarContadoresNav();
             cerrarModalDetalleOperacion();
             await renderAdminOperacionesTable(obtenerFiltrosAdminActuales());
         } catch (err) {
@@ -1376,6 +1621,7 @@
     async function rechazarOperacionDesdeModal(opId, motivo) {
         try {
             await OPERACIONES_SERVICE.rechazarOperacion(opId, motivo);
+            actualizarContadoresNav();
             cerrarModalDetalleOperacion();
             await renderAdminOperacionesTable(obtenerFiltrosAdminActuales());
         } catch (err) {
@@ -1507,6 +1753,7 @@
         try {
             const datosPago = { bancoOrigen: banco, referenciaAprobacion: referencia, placa };
             const op = await OPERACIONES_SERVICE.registrarOperacionDemo(ultimaLiquidacion, posActivo, datosPago);
+            actualizarContadoresNav();
             dom.modalRegistroPagoPos.classList.remove('open');
             notificar(
                 `${op.vehiculoDescripcion} · Placa ${op.placa}\n` +
@@ -1541,7 +1788,7 @@
             <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);
                         border-radius:var(--radius-md);padding:14px;margin-bottom:18px;">
                 <div style="font-size:12px;font-weight:700;color:#991b1b;margin-bottom:4px;">
-                    ✕ Motivo del Rechazo
+                    ${ico('close')} Motivo del rechazo
                 </div>
                 <div style="font-size:13.5px;color:#ef4444;">
                     ${escaparHtml(op.motivoRechazo || 'No se especificó un motivo.')}
@@ -1617,6 +1864,7 @@
             const datosPago = { bancoOrigen: banco, referenciaAprobacion: referencia };
             const posNombre = posActivo ? posActivo.nombre : 'Punto de Venta';
             await OPERACIONES_SERVICE.reenviarComprobante(opId, datosPago, posNombre);
+            actualizarContadoresNav();
             dom.modalCorregirPagoPos.classList.remove('open');
             notificar('La operación vuelve a «Pendiente de revisión» para que el proveedor la verifique.', {
                 tipo: 'exito',
@@ -1666,6 +1914,24 @@
         }
 
         // ---- Modal de perfiles Demo ----
+        if (dom.btnAvatarPerfil) {
+            dom.btnAvatarPerfil.addEventListener('click', () => dom.modalDemoAuth.classList.add('open'));
+        }
+
+        // ---- Enlaces internos de las tarjetas del resumen (data-goto) ----
+        document.addEventListener('click', (e) => {
+            const enlace = e.target.closest('[data-goto]');
+            if (!enlace) return;
+            if (enlace.dataset.filtroEstado && dom.filterEstadoSelectAdmin) {
+                dom.filterEstadoSelectAdmin.value = enlace.dataset.filtroEstado;
+            }
+            cambiarVista(enlace.dataset.goto);
+        });
+
+        // ---- Reposicionar el indicador de la navegación ----
+        window.addEventListener('resize', moverIndicadorNav);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(moverIndicadorNav);
+
         if (dom.btnOpenProfileModal) {
             dom.btnOpenProfileModal.addEventListener('click', () => dom.modalDemoAuth.classList.add('open'));
         }
@@ -1778,6 +2044,7 @@
                 if (btnToggle) {
                     const posId = btnToggle.getAttribute('data-pos-id');
                     await POS_SERVICE.toggleEstadoPuntoVenta(posId);
+                    actualizarContadoresNav();
                     await renderAdminPosTable(dom.searchPosInput?.value || '');
                     const puntos = await POS_SERVICE.getPuntosVenta();
                     poblarSelectorPuntosDemo(puntos);
@@ -2186,8 +2453,9 @@
 
     function aplicarTema(tema) {
         document.documentElement.setAttribute('data-theme', tema);
-        dom.themeToggle.innerHTML = tema === 'dark' ? ICONOS.sun : ICONOS.moon;
-        dom.themeToggle.setAttribute('title', tema === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+        const etiqueta = tema === 'dark' ? 'Modo claro' : 'Modo oscuro';
+        dom.themeToggle.innerHTML = `${tema === 'dark' ? ICONOS.sun : ICONOS.moon}<span class="dock__tip">${etiqueta}</span>`;
+        dom.themeToggle.setAttribute('aria-label', etiqueta);
     }
 
     /* =========================================================================
